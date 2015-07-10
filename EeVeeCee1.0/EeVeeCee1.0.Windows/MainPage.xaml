@@ -11,7 +11,15 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <bm:Map ZoomLevel="7.5" Credentials="AkIz1619KtztMcHec-vGpU_cTHN69_-wGpWsWrNU9vluXhZAXnisKeVV9RQyQZCS" x:Name="myMap" Margin="0,58,0,0" IsDoubleTapEnabled="False" IsRightTapEnabled="False" HomeRegion=""/>
         <TextBox x:Name="locationBox" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="581" PlaceholderText="Location" KeyUp="CheckForEnter" Height="34"/>
-        <TextBox x:Name="radiusBox" HorizontalAlignment="Left" Margin="622,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PlaceholderText="Radius" Width="91" KeyUp="CheckForEnter" Height="34"/>
+        <ComboBox x:Name="radiusBox" HorizontalAlignment="Left" Margin="617,10,0,0" VerticalAlignment="Top" Width="132" KeyUp="CheckForEnter" FontFamily="Global User Interface" PlaceholderText="Radius" Height="34">
+            <ListBoxItem Content="1" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="5" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="10" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="25" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="50" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="100" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="200" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+        </ComboBox>
         <ComboBox x:Name="chargeLevelBox" HorizontalAlignment="Left" Margin="769,9,0,0" VerticalAlignment="Top" Width="184" PlaceholderText="Charge Level" MaxDropDownHeight="Infinity" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" KeyUp="CheckForEnter">
             <ListBoxItem Content="All" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
             <ListBoxItem Content="1" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
@@ -35,14 +43,6 @@
         <TextBlock x:Name="badInputLabel" HorizontalAlignment="Left" Margin="1231,17,0,0" TextWrapping="Wrap" Text="Please enter valid location and/or radius." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
         <TextBlock x:Name="statusLabel" HorizontalAlignment="Left" Margin="1231,17,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="15" Foreground="White" Visibility="Visible" FontWeight="Bold"/>
         <TextBlock x:Name="noInternetLabel" HorizontalAlignment="Left" Margin="1231,17,0,0" TextWrapping="Wrap" Text="Request timed out.  The internet is currently unavailable." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
-        <ComboBox x:Name="rb" HorizontalAlignment="Left" Margin="1236,13,0,0" VerticalAlignment="Top" Width="120" KeyUp="CheckForEnter" FontFamily="Global User Interface" PlaceholderText="Radius">
-            <ListBoxItem Content="1" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
-            <ListBoxItem Content="5" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
-            <ListBoxItem Content="10" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
-            <ListBoxItem Content="25" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
-            <ListBoxItem Content="50" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
-            <ListBoxItem Content="100" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
-            <ListBoxItem Content="200" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
-        </ComboBox>
+        
     </Grid>
 </Page>

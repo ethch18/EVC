@@ -91,23 +91,26 @@ namespace EeVeeCee1._0
             //populate variables, or route to ShowFailMsg() or ShowBadInputMsg() if improper input
             string location = this.locationBox.Text;
             
-            string tempRadius = this.radiusBox.Text;
+            //string tempRadius = this.radiusBox.Text;
+            string tempRadius = (string)((ListBoxItem)this.radiusBox.SelectedValue).Content;
             decimal radius;
+
+            string ev_charging_level;
             try
             {
-                 string testForCharge = (string)((ListBoxItem)this.chargeLevelBox.SelectedValue).Content;
+                 ev_charging_level = ((string)((ListBoxItem)this.chargeLevelBox.SelectedValue).Content);
             }
             catch (NullReferenceException)
             {
                 ShowFailMsg();
                 return;
             }            
-
-            string ev_charging_level = (string)((ListBoxItem)this.chargeLevelBox.SelectedValue).Content;
-            if (ev_charging_level.Equals("DC Fast"))
+            //string ev_charging_level = (string)((ListBoxItem)this.chargeLevelBox.SelectedValue).Content;
+            if (ev_charging_level.ToLower().Equals("dc fast"))
             {
                 ev_charging_level = "dc_fast";
             }
+            ev_charging_level = ev_charging_level.ToLower();
             
             string ev_network = "";
             if (allNetworksCheck.IsChecked == true)
@@ -330,7 +333,7 @@ namespace EeVeeCee1._0
         /// <returns></returns>
         private string ConstructQuery(string location, decimal radius, string ev_network, string ev_charging_level)
         {
-            return head + key 
+            return head + key
                         + "&location=" + location
                         + "&radius=" + radius
                         + "&status=E&access=public&fuel_type=ELEC"
