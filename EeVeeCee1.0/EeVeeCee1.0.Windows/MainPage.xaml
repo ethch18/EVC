@@ -1,0 +1,48 @@
+﻿<Page
+    x:Class="EeVeeCee1._0.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EeVeeCee1._0"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:bm="using:Bing.Maps"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <bm:Map ZoomLevel="7.5" Credentials="AkIz1619KtztMcHec-vGpU_cTHN69_-wGpWsWrNU9vluXhZAXnisKeVV9RQyQZCS" x:Name="myMap" Margin="0,58,0,0" IsDoubleTapEnabled="False" IsRightTapEnabled="False" HomeRegion=""/>
+        <TextBox x:Name="locationBox" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="581" PlaceholderText="Location" KeyUp="CheckForEnter" Height="34"/>
+        <TextBox x:Name="radiusBox" HorizontalAlignment="Left" Margin="622,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PlaceholderText="Radius" Width="91" KeyUp="CheckForEnter" Height="34"/>
+        <ComboBox x:Name="chargeLevelBox" HorizontalAlignment="Left" Margin="769,9,0,0" VerticalAlignment="Top" Width="184" PlaceholderText="Charge Level" MaxDropDownHeight="Infinity" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" KeyUp="CheckForEnter">
+            <ListBoxItem Content="All" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="1" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="2" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="DC Fast" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="Legacy" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+        </ComboBox>
+        <ComboBox x:Name="networkBox" HorizontalAlignment="Left" Margin="1012,11,0,0" VerticalAlignment="Top" Width="117" PlaceholderText="Network" MaxDropDownHeight="Infinity" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" KeyUp="CheckForEnter" SelectedIndex="-1" Height="34">
+            <CheckBox x:Name="allNetworksCheck" Content="All" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="allNetworksCheck_Unchecked" Checked="allNetworksCheck_Checked"/>
+            <CheckBox x:Name="blinkNetworkCheck" Content="Blink Network" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked"/>
+            <CheckBox x:Name="chargePointCheck" Content="ChargePoint Network" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked"/>
+            <CheckBox x:Name="eVgoCheck" Content="eVgo Network" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked"/>
+            <CheckBox x:Name="EVSECheck" Content="EVSE LLC WebNet" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked"/>
+            <CheckBox x:Name="rechargeAccessCheck" Content="RechargeAccess" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked"/>
+            <CheckBox x:Name="shorepowerCheck" Content="Shorepower" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked"/>
+        </ComboBox>
+        <Button x:Name="goButton" Content="Go" HorizontalAlignment="Left" Margin="1169,6,0,0" VerticalAlignment="Top" Click="goButton_Click" Tapped="goButton_Click" FontFamily="Global User Interface" KeyUp="CheckForEnter"/>
+        <TextBlock x:Name="timeOutLabel" HorizontalAlignment="Left" Margin="1231,17,0,0" TextWrapping="Wrap" Text="Request timed out. Please try a more specific query and double check the location." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
+        <TextBlock x:Name="noResultLabel" HorizontalAlignment="Left" Margin="1231,17,0,0" TextWrapping="Wrap" Text="No results found." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
+        <TextBlock x:Name="failLabel" HorizontalAlignment="Left" Margin="1231,17,0,0" TextWrapping="Wrap" Text="Please fill all fields." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
+        <TextBlock x:Name="badInputLabel" HorizontalAlignment="Left" Margin="1231,17,0,0" TextWrapping="Wrap" Text="Please enter valid location and/or radius." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
+        <TextBlock x:Name="statusLabel" HorizontalAlignment="Left" Margin="1231,17,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="15" Foreground="White" Visibility="Visible" FontWeight="Bold"/>
+        <TextBlock x:Name="noInternetLabel" HorizontalAlignment="Left" Margin="1231,17,0,0" TextWrapping="Wrap" Text="Request timed out.  The internet is currently unavailable." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
+        <ComboBox x:Name="rb" HorizontalAlignment="Left" Margin="1236,13,0,0" VerticalAlignment="Top" Width="120" KeyUp="CheckForEnter" FontFamily="Global User Interface" PlaceholderText="Radius">
+            <ListBoxItem Content="1" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="5" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="10" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="25" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="50" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="100" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="200" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+        </ComboBox>
+    </Grid>
+</Page>

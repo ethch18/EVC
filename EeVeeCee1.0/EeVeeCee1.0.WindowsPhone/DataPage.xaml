@@ -1,0 +1,32 @@
+﻿<Page
+    x:Class="EeVeeCee1._0.DataPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EeVeeCee1._0"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="22,30,0,0" TextWrapping="Wrap" Text="EeVeeCee1.0" VerticalAlignment="Top" FontSize="35"/>
+        <TextBox x:Name="locationBox" HorizontalAlignment="Left" Margin="22,122,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PlaceholderText="Location" Width="368"/>
+        <TextBox x:Name="radiusBox" HorizontalAlignment="Left" Margin="22,193,0,0" TextWrapping="Wrap" VerticalAlignment="Top" PlaceholderText="Radius" Width="135"/>
+        <ListBox x:Name="chargeLevelBox" HorizontalAlignment="Left" Height="50" Margin="22,260,0,0" VerticalAlignment="Top" Width="368" FontSize="16">
+            <ListBoxItem Content="All Charge Levels" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False" FontSize="16"/>
+            <ListBoxItem Content="1" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False" FontSize="16"/>
+            <ListBoxItem Content="2" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="DC Fast" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="Legacy" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+        </ListBox>
+        <ListBox x:Name="limitBox" HorizontalAlignment="Left" Height="39" Margin="255,191,0,0" VerticalAlignment="Top" Width="135" FontSize="16">
+            <ListBoxItem Content="10" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="25" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="50" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+            <ListBoxItem Content="100" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+        </ListBox>
+        <Button x:Name="goButton" Content="Go" HorizontalAlignment="Left" Margin="22,520,0,0" VerticalAlignment="Top" Tapped="goButton_Tapped"/>
+        <TextBlock x:Name="failBlock" HorizontalAlignment="Left" Margin="22,330,0,0" TextWrapping="Wrap" Text="Please complete ALL fields." VerticalAlignment="Top" Foreground="Red" FontSize="20" Width="238" Visibility="Collapsed"/>
+
+    </Grid>
+</Page>
