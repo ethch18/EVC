@@ -142,15 +142,32 @@ namespace EeVeeCee1._0
 
         private void OnCommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
         {
-
             args.Request.ApplicationCommands.Add(new SettingsCommand(
-                "Credits", "Credits", (handler) => ShowCustomSettingFlyout()));
+                "Help", "Help", (handler) => ShowHelpFlyout()));
+            args.Request.ApplicationCommands.Add(new SettingsCommand(
+                "About", "About", (handler) => ShowCreditsFlyout()));
+            args.Request.ApplicationCommands.Add(new SettingsCommand(
+                "Send Feedback", "Send Feedback", (handler) => OpenFeedbackLink()));
+            
         }
 
-        public void ShowCustomSettingFlyout()
+        public void ShowCreditsFlyout()
         {
             SettingsFlyout1 CustomSettingFlyout = new SettingsFlyout1();
             CustomSettingFlyout.Show();
+            
+        }
+
+        public void ShowHelpFlyout()
+        {
+            SettingsFlyout2 HelpFlyout = new SettingsFlyout2();
+            HelpFlyout.Show();
+        }
+
+        private async void OpenFeedbackLink()
+        {
+            Uri uri = new Uri("http://1drv.ms/1IQUSpI");
+            await Windows.System.Launcher.LaunchUriAsync(uri);
         }
 
 

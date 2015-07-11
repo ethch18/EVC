@@ -60,7 +60,6 @@ namespace EeVeeCee1._0
 
             this.InitializeComponent();
             this.allNetworksCheck.IsChecked = true;
-
             this.myMap.SetView(new Location(39.833, -98.533), 5);
             this.dontTrip = false;
             this.noInternet = false; // TODO: make this more accurate
@@ -239,12 +238,13 @@ namespace EeVeeCee1._0
                     Pushpin p = new Pushpin();
                     p.Width *= 1.5;
                     p.Height *= 1.5;
-                    p.Text = f.station_name;
+                    //p.Text = f.station_name;
                     Location pin = new Location(f.latitude, f.longitude);
 
                     MapLayer.SetPosition(p, pin);
                     ToolTipService.SetToolTip(p, f.station_name);
                     populated.Add(f);
+                    p.Text = populated.Count.ToString(); //the size of the list is equal to the retrieval number
                     myMap.Children.Add(p);
                     resultCount++;
                 }
@@ -335,6 +335,17 @@ namespace EeVeeCee1._0
         {
             return head + key
                         + "&location=" + location
+                        + "&radius=" + radius
+                        + "&status=E&access=public&fuel_type=ELEC"
+                        + "&ev_network=" + ev_network
+                        + "&ev_charging_level=" + ev_charging_level
+                        + "&limit=" + QUERY_RESULT_LIMIT;
+        }
+        private string ConstructLatLongQuery(decimal latitude, decimal longitude, decimal radius, string ev_network, string ev_charging_level)
+        {
+            return head + key
+                        + "&latitude=" + latitude
+                        + "&longitude=" + longitude
                         + "&radius=" + radius
                         + "&status=E&access=public&fuel_type=ELEC"
                         + "&ev_network=" + ev_network
