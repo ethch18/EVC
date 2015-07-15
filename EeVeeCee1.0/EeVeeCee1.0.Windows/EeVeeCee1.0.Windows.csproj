@@ -114,6 +114,9 @@
       <DependentUpon>SettingsFlyout2.xaml</DependentUpon>
     </Compile>
     <Compile Include="Station.cs" />
+    <Compile Include="StationInfoControl.xaml.cs">
+      <DependentUpon>StationInfoControl.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -142,6 +145,14 @@
     <Page Include="SettingsFlyout2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StationInfoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

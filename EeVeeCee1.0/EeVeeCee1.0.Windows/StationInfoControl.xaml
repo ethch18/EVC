@@ -1,0 +1,36 @@
+﻿<UserControl
+    x:Class="EeVeeCee1._0.StationInfoControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EeVeeCee1._0"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="150"
+    d:DesignWidth="250">
+    <Canvas HorizontalAlignment="Left" Height="150" VerticalAlignment="Top" Width="250" Background="Azure">
+        <TextBlock x:Name="header" Text="Station" Foreground="Black" FontSize="15" Canvas.Top="0" FontFamily="Arial" FontWeight="ExtraBlack"/>
+        <TextBlock x:Name="distanceHead" Text="Distance: " Foreground="Black" FontSize="15" Canvas.Top="15" FontFamily="Arial" FontWeight="Bold"/>
+        <TextBlock x:Name="addressHead" Text="Located at: " Foreground="Black" FontSize="15" Canvas.Top="30" FontFamily="Arial" FontWeight="Bold"/>
+        <TextBlock x:Name="hoursHead" Text="Open Hours: " Foreground="Black" FontSize="15" Canvas.Top="45" FontFamily="Arial" FontWeight="Bold"/>
+        <TextBlock x:Name="levelOneHead" Text="L1: " Foreground="Black" FontSize="15" Canvas.Top="60" FontFamily="Arial" FontWeight="Bold"/>
+        <TextBlock x:Name="levelTwoHead" Text="L2: " Foreground="Black" FontSize="15" Canvas.Top="60" FontFamily="Arial" Canvas.Left="46" FontWeight="Bold"/>
+        <TextBlock x:Name="dcFastHead" Text="DC Fast: " Foreground="Black" FontSize="15" Canvas.Top="60" FontFamily="Arial" Canvas.Left="91" FontWeight="Bold"/>
+        <TextBlock x:Name="legacyHead" Text="Legacy: " Foreground="Black" FontSize="15" Canvas.Top="60" FontFamily="Arial" Canvas.Left="174" FontWeight="Bold"/>
+        <TextBlock x:Name="notesHead" Text="Notes: " Foreground="Black" FontSize="15" Canvas.Top="75" FontFamily="Arial" FontWeight="Bold"/>
+        <TextBlock x:Name="stationName" Foreground="Black" FontSize="15" Canvas.Top="0" FontFamily="Arial" Text="Test" Canvas.Left="100" FontWeight="SemiBold"/>
+        <TextBlock x:Name="distance" Foreground="Black" FontSize="15" Canvas.Top="15" FontFamily="Arial" Text="Test" Canvas.Left="100"/>
+        <TextBlock x:Name="address" Foreground="Black" FontSize="15" Canvas.Top="30" FontFamily="Arial" Text="Test" Canvas.Left="100"/>
+        <TextBlock x:Name="hours" Foreground="Black" FontSize="15" Canvas.Top="45" FontFamily="Arial" Text="Test" Canvas.Left="100"/>
+        <TextBlock x:Name="l1Count" Foreground="Black" FontSize="15" Canvas.Top="60" FontFamily="Arial" Text="#" Canvas.Left="26"/>
+        <TextBlock x:Name="l2Count" Foreground="Black" FontSize="15" Canvas.Top="60" FontFamily="Arial" Text="#" Canvas.Left="72"/>
+        <TextBlock x:Name="dcCount" Foreground="Black" FontSize="15" Canvas.Top="60" FontFamily="Arial" Text="#" Canvas.Left="157"/>
+        <TextBlock x:Name="legacyCount" Foreground="Black" FontSize="15" Canvas.Top="60" FontFamily="Arial" Text="#" Canvas.Left="235"/>
+        <TextBlock x:Name="notes" Foreground="Black" FontSize="15" Canvas.Top="90" FontFamily="Arial" Text="Lorem ipsum sit dolor lorem ipsum sit dolor" Height="60" Width="250" Margin="0,0,250,0" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis"/>
+
+
+
+    </Canvas>
+
+
+</UserControl>

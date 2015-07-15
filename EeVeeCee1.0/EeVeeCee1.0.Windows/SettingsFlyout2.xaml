@@ -1,0 +1,81 @@
+﻿<SettingsFlyout
+    x:Class="EeVeeCee1._0.SettingsFlyout2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EeVeeCee1._0"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    IconSource="Assets/SmallLogo.png"
+    Title="Help"
+    d:DesignWidth="346">
+
+    <!-- This StackPanel acts as a root panel for vertical layout of the content sections -->
+    <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+
+        <!-- The StackPanel(s) below define individual content sections -->
+
+        <!-- Content Section 1-->
+        <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+
+            <!-- Section 1 header -->
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Location" />
+
+            <!-- Section 1 body -->
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,25" TextWrapping="Wrap">
+                <TextBlock.Text>
+                    Provide a combination of address, city, state, and/or ZIP code.
+                </TextBlock.Text>
+            </TextBlock>
+
+        </StackPanel>
+
+        <!-- Define more Content Sections below as necessary -->
+        <!-- Content Section 1-->
+        <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+
+            <!-- Section 1 header -->
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Radius" />
+
+            <!-- Section 1 body -->
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,25" TextWrapping="Wrap">
+                <TextBlock.Text>
+                    Choose how far away from the specified location to search (in miles).
+                </TextBlock.Text>
+            </TextBlock>
+
+        </StackPanel>
+        <!-- Content Section 1-->
+        <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+
+            <!-- Section 1 header -->
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Charge Level" />
+
+            <!-- Section 1 body -->
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,25" TextWrapping="Wrap">
+                <Run Text="1: Standard 120V outlet"/>
+                <LineBreak/>
+                <Run Text="2: Standard 240V outlet"/>
+                <LineBreak/>
+                <Run Text="DC Fast: Tesla SuperCharger"/>
+                <LineBreak/>
+                <Run Text="Legacy: Legacy Charging Systems"/>
+            </TextBlock>
+
+        </StackPanel>
+        <!-- Content Section 1-->
+        <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+
+            <!-- Section 1 header -->
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Network" />
+
+            <!-- Section 1 body -->
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,25" TextWrapping="Wrap">
+                <TextBlock.Text>
+                    Choose one or more EV charging networks to search within.
+                </TextBlock.Text>
+            </TextBlock>
+
+        </StackPanel>
+    </StackPanel>
+</SettingsFlyout>

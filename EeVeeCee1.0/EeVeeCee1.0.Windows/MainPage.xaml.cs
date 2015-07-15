@@ -64,6 +64,7 @@ namespace EeVeeCee1._0
             this.dontTrip = false;
             this.noInternet = false; // TODO: make this more accurate
             this.canContinue = true;
+            
         }
 
 
@@ -201,7 +202,6 @@ namespace EeVeeCee1._0
                     if (response.IsSuccessStatusCode)
                     {
                         Stream messageContent = response.Content.ReadAsStreamAsync().Result;
-                        
                         StreamReader sr = new StreamReader(messageContent);
                         string jString = sr.ReadToEnd();
                         this.qString = jString;
