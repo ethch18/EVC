@@ -34,7 +34,7 @@
                     <ListBoxItem Content="1" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
                     <ListBoxItem Content="2" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
                     <ListBoxItem Content="DC Fast" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
-                    <ListBoxItem Content="Legacy" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+                    <!-- <ListBoxItem Content="Legacy" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/> -->
                 </ComboBox>
             </Grid>
             <Grid Name="networkGrid" Margin="905,0,74,714" Grid.Column="4">
@@ -46,6 +46,7 @@
                     <CheckBox x:Name="eVgoCheck" Content="eVgo Network" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked"/>
                     <CheckBox x:Name="EVSECheck" Content="EVSE LLC WebNet" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked"/>
                     <CheckBox x:Name="rechargeAccessCheck" Content="RechargeAccess" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked"/>
+                    <!-- <CheckBox x:Name="semaChargeCheck" Content="SemaCharge Network" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked"/> -->
                     <CheckBox x:Name="shorepowerCheck" Content="Shorepower" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked"/>
                 </ComboBox>
             </Grid>

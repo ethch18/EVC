@@ -139,6 +139,10 @@ namespace EeVeeCee1._0
                 {
                     ev_network += "RechargeAccess,";
                 }
+                //if (semaChargeCheck.IsChecked == true)
+                //{
+                //    ev_network += "SemaCharge Network";
+                //}
                 if (shorepowerCheck.IsChecked == true)
                 {
                     ev_network += "Shorepower,";
@@ -219,6 +223,7 @@ namespace EeVeeCee1._0
                         canContinue = false;
                     }
                 }
+
             }
         }
 
@@ -240,13 +245,17 @@ namespace EeVeeCee1._0
                     p.Height *= 1.5;
                     //p.Text = f.station_name;
                     Location pin = new Location(f.latitude, f.longitude);
-
+                    
                     MapLayer.SetPosition(p, pin);
                     ToolTipService.SetToolTip(p, f.station_name);
                     populated.Add(f);
                     p.Text = populated.Count.ToString(); //the size of the list is equal to the retrieval number
                     myMap.Children.Add(p);
                     resultCount++;
+
+                    
+                    //p.Tapped += pinTapped;
+                    p.Tapped += new TappedEventHandler(pinTapped);
                 }
             }
             //catch (JsonSerializationException)
@@ -324,7 +333,7 @@ namespace EeVeeCee1._0
         }
 
         /// <summary>
-        /// Constructs a query from the provided parameters
+        /// Constructs a location-based query from the provided parameters
         /// </summary>
         /// <param name="location"></param>
         /// <param name="radius"></param>
@@ -341,6 +350,15 @@ namespace EeVeeCee1._0
                         + "&ev_charging_level=" + ev_charging_level
                         + "&limit=" + QUERY_RESULT_LIMIT;
         }
+        /// <summary>
+        /// Constructs a latitude/longitude-based query from the provided parameters
+        /// </summary>
+        /// <param name="latitude"></param>
+        /// <param name="longitude"></param>
+        /// <param name="radius"></param>
+        /// <param name="ev_network"></param>
+        /// <param name="ev_charging_level"></param>
+        /// <returns></returns>
         private string ConstructLatLongQuery(decimal latitude, decimal longitude, decimal radius, string ev_network, string ev_charging_level)
         {
             return head + key
@@ -400,6 +418,87 @@ namespace EeVeeCee1._0
             badInputLabel.Visibility = Visibility.Visible;
         }
         
+       /// <summary>
+       /// Shows an expanded tooltip for the tapped station
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
+        private void pinTapped(object sender, TappedRoutedEventArgs e)
+        {
+            Pushpin p = sender as Pushpin;
+            int positionInList;
+            if (Int32.TryParse(p.Text, out positionInList))
+            {
+                Fuel_Stations f = populated[positionInList - 1];
+
+                String stationName = f.station_name;
+                String stationStreetAddress = f.street_address;
+                String stationCityAddress = f.city + ", " + f.state + " " + f.zip;
+                double tempDistance = (Math.Round(((double) f.distance) * 10)) / 10;
+                String stationDistance = tempDistance.ToString() + " mi";
+                String stationHours = f.access_days_time;
+                String stationL1 = f.ev_level1_evse_num.ToString();
+                if (String.IsNullOrWhiteSpace(stationL1))
+                {
+                    stationL1 = "0";
+                }
+                String stationL2 = f.ev_level2_evse_num.ToString();
+                if (String.IsNullOrWhiteSpace(stationL2))
+                {
+                    stationL2 = "0";
+                }
+                String stationDCFast = f.ev_dc_fast_num.ToString();
+                if (String.IsNullOrWhiteSpace(stationDCFast))
+                {
+                    stationDCFast = "0";
+                }
+                String stationNetwork = f.ev_network;
+                if (String.IsNullOrWhiteSpace(stationNetwork))
+                {
+                    stationNetwork = "n/a";
+                }
+
+                StationInfoControl infoBox = new StationInfoControl();
+                infoBox.StationName = stationName;
+                infoBox.AddressLine1 = stationStreetAddress;
+                infoBox.AddressLine2 = stationCityAddress;
+                infoBox.Distance = stationDistance;
+                infoBox.Level1Count = stationL1;
+                infoBox.Level2Count = stationL2;
+                infoBox.DCFastCount = stationDCFast;
+                infoBox.Network = stationNetwork;
+                infoBox.Notes = (String.IsNullOrWhiteSpace(f.intersection_directions)) ? "" : f.intersection_directions;
+
+                Location anchorpoint = new Location(f.latitude, f.longitude);
+                MapLayer.SetPositionAnchor(infoBox, new Point(0, 165));
+                MapLayer.SetPosition(infoBox, anchorpoint);
+                myMap.Children.Add(infoBox);
+                //infoBox.CloseButton.Tapped += CloseButton_Tapped;
+                infoBox.CloseButton.Tapped += new TappedEventHandler(CloseInfoControl);
+                //infoBox.KeyDown += new KeyEventHandler(CloseInfoControl);
+            }
+
+
+        }
+        //private void InfoControlKeyPressed(object sender, KeyRoutedEventArgs e)
+        //{
+        //    if (e.Key == Windows.System.VirtualKey.Escape)
+        //    {
+        //        CloseInfoControl(sender, e as RoutedEventArgs);
+        //    }
+        //}
+        /// <summary>
+        /// Method to handle closure of StationInfoControl on the map
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CloseInfoControl(object sender, RoutedEventArgs e)
+        {
+            Canvas wrapper = (Canvas)((Button)sender).Parent;
+            StationInfoControl infoBox = (StationInfoControl) wrapper.Parent;
+            myMap.Children.Remove(infoBox);
+        }
+
         /// <summary>
         /// Routes tapped event to clicked event.
         /// </summary>
@@ -431,6 +530,7 @@ namespace EeVeeCee1._0
                 && eVgoCheck.IsChecked == true
                 && EVSECheck.IsChecked == true
                 && rechargeAccessCheck.IsChecked == true
+                //&& semaChargeCheck.IsChecked == true
                 && shorepowerCheck.IsChecked == true)
             {
                 allNetworksCheck.IsChecked = true;
@@ -454,6 +554,7 @@ namespace EeVeeCee1._0
             eVgoCheck.IsChecked = false;
             EVSECheck.IsChecked = false;
             rechargeAccessCheck.IsChecked = false;
+            //semaChargeCheck.IsChecked = false;
             shorepowerCheck.IsChecked = false;
 
             this.dontTrip = false;
@@ -467,6 +568,7 @@ namespace EeVeeCee1._0
             eVgoCheck.IsChecked = true;
             EVSECheck.IsChecked = true;
             rechargeAccessCheck.IsChecked = true;
+            //semaChargeCheck.IsChecked = true;
             shorepowerCheck.IsChecked = true;
 
 
