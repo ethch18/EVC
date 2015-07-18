@@ -1,0 +1,48 @@
+﻿<SettingsFlyout
+    x:Class="EeVeeCee1._0.PrivacyPolicyFlyout"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EeVeeCee1._0"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    IconSource="Assets/SmallLogo.png"
+    Title="Privacy Policy"
+    d:DesignWidth="346">
+
+    <!-- This StackPanel acts as a root panel for vertical layout of the content sections -->
+    <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+
+        <!-- The StackPanel(s) below define individual content sections -->
+
+        <!-- Content Section 1-->
+        <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+
+            <!-- Section 1 header -->
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Privacy Policy" />
+
+            <!-- Section 1 body -->
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,25" TextWrapping="Wrap">
+                <TextBlock.Text>
+                    The publishers of this app (hereafter referred to as "we") make every effort to ensure the protection of your privacy.  We do not store your queries, and we do not collect your location unless you explicitly allow us to do so.  Information is sent via HTTPS to https://developer.nrel.gov ("Data Provider"), which provides the data behind this service.  However, with respect to information sent via this app, neither we nor our affiliates make any warranty, express or implied, or assume any legal liability for the final security and privacy of said information, or represent that its use is completely secure.  The Data Provider's handling of your information is subject to their policies, which are linked below.
+                </TextBlock.Text>
+            </TextBlock>
+
+        </StackPanel>
+
+        <!-- Define more Content Sections below as necessary -->
+        <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+
+            <!-- Section 2 header -->
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Resources" />
+
+            <!-- Section 2 body -->
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,25" TextWrapping="Wrap">
+                <Hyperlink NavigateUri="http://www.nrel.gov/security.html">Data Provider Privacy Policy</Hyperlink>
+                <LineBreak/>
+                <Hyperlink NavigateUri="http://www.nrel.gov/disclaimer.html">Data Provider Disclaimer</Hyperlink>
+            </TextBlock>
+
+        </StackPanel>
+    </StackPanel>
+</SettingsFlyout>

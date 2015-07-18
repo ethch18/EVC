@@ -18,7 +18,7 @@
         <TextBlock x:Name="dcFastHead" Text="DC Fast: " Foreground="Black" FontSize="15" Canvas.Top="75" FontFamily="Arial" Canvas.Left="138" FontWeight="Bold"/>
         <!-- <TextBlock x:Name="legacyHead" Text="Legacy: " Foreground="Black" FontSize="15" Canvas.Top="90" FontFamily="Arial" Canvas.Left="174" FontWeight="Bold"/> -->
         <TextBlock x:Name="notesHead" Text="Notes: " Foreground="Black" FontSize="15" Canvas.Top="90" FontFamily="Arial" FontWeight="Bold"/>
-        <TextBlock x:Name="stationName" Foreground="Black" FontSize="15" Canvas.Top="0" FontFamily="Arial" Text="name" Canvas.Left="0" FontWeight="Bold" Width="233" TextWrapping="WrapWholeWords" TextTrimming="Clip"/>
+        <TextBlock x:Name="stationName" Foreground="Black" FontSize="15" Canvas.Top="0" FontFamily="Arial" Text="name" Canvas.Left="0" FontWeight="Bold" Width="233" TextTrimming="CharacterEllipsis"/>
         <TextBlock x:Name="network" Foreground="Black" FontSize="15" Canvas.Top="15" FontFamily="Arial" Text="ThisNet" Canvas.Left="100"/>
         <TextBlock x:Name="distance" Foreground="Black" FontSize="15" Canvas.Top="30" FontFamily="Arial" Text="x miles" Canvas.Left="100"/>
         <TextBlock x:Name="addressLine1" Foreground="Black" FontSize="15" Canvas.Top="45" FontFamily="Arial" Canvas.Left="100" Height="17" Width="150" TextWrapping="WrapWholeWords"/>

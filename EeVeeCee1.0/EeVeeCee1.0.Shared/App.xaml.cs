@@ -148,6 +148,8 @@ namespace EeVeeCee1._0
                 "About", "About", (handler) => ShowCreditsFlyout()));
             args.Request.ApplicationCommands.Add(new SettingsCommand(
                 "Send Feedback", "Send Feedback", (handler) => OpenFeedbackLink()));
+            args.Request.ApplicationCommands.Add(new SettingsCommand(
+                "Privacy Policy", "Privacy Policy", (handler) => ShowPrivacyPolicy()));
             
         }
 
@@ -167,7 +169,14 @@ namespace EeVeeCee1._0
         private async void OpenFeedbackLink()
         {
             Uri uri = new Uri("http://1drv.ms/1IQUSpI");
+            //Uri uri = new Uri("http://goo.gl/forms/YPt3obMeH2");
             await Windows.System.Launcher.LaunchUriAsync(uri);
+        }
+        
+        public void ShowPrivacyPolicy()
+        {
+            PrivacyPolicyFlyout Privacy = new PrivacyPolicyFlyout();
+            Privacy.Show();
         }
 
 

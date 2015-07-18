@@ -25,10 +25,7 @@ namespace EeVeeCee1._0
             {
                 return this.closeButton;
             }
-            set
-            {
-                this.closeButton = value;
-            }
+
         }
         public string StationName
         {

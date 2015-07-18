@@ -58,8 +58,7 @@
                 <Run Text="2: Standard 240V outlet"/>
                 <LineBreak/>
                 <Run Text="DC Fast: Tesla SuperCharger"/>
-                <LineBreak/>
-                <Run Text="Legacy: Legacy Charging Systems"/>
+
             </TextBlock>
 
         </StackPanel>

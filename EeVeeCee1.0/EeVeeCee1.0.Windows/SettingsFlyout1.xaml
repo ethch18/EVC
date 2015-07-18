@@ -23,11 +23,13 @@
 
             <!-- Section 1 body -->
             <TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,25" TextWrapping="Wrap">
-                <TextBlock.Text>
-                    Created by Ethan Chau at CodeDay, May 23-24, 2015.
-                    Splash screen image sourced from Wikipedia under Creative Commons License.  
-                    Library JSON.NET provided by Newtonsoft under MIT Open Source License.
-                </TextBlock.Text>
+                <Run Text="Created at CodeDay, May 23-24, 2015."/>
+                <LineBreak/> <LineBreak/>
+                <Run Text="Library JSON.NET provided by Newtonsoft under MIT Open Source License."/>
+                <LineBreak/> <LineBreak/>
+                <Run Text="Data Provider: NREL Alternative Fuel Stations Nearest Station API"/>
+                <LineBreak/> <LineBreak/>
+                <Run Text="The performance of this app depends on the speed and reliability of your internet connection." FontWeight="SemiBold"/>
             </TextBlock>
 
         </StackPanel>
