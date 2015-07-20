@@ -443,9 +443,10 @@ namespace EeVeeCee1._0
        /// <param name="e"></param>
         private void pinTapped(object sender, TappedRoutedEventArgs e)
         {
-            Pushpin p = sender as Pushpin;
+            WidePushpin p = sender as WidePushpin;
             int positionInList;
-            if (Int32.TryParse(p.Text, out positionInList))
+            //if (Int32.TryParse(p.Text, out positionInList))
+            if (Int32.TryParse(p.Content, out positionInList))
             {
                 Fuel_Stations f = populated[positionInList - 1];
 
