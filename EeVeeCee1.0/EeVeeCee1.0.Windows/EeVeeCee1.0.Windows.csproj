@@ -120,6 +120,9 @@
     <Compile Include="StationInfoControl.xaml.cs">
       <DependentUpon>StationInfoControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WidePushpin.xaml.cs">
+      <DependentUpon>WidePushpin.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -143,6 +146,7 @@
     <Content Include="Assets\StoreLogo.scale-140.png" />
     <Content Include="Assets\StoreLogo.scale-180.png" />
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\ControlBackground.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml">
@@ -168,6 +172,10 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WidePushpin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

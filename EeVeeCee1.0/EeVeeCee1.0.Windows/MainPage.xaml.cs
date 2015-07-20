@@ -44,10 +44,11 @@ namespace EeVeeCee1._0
         private bool dontTrip;
         private bool noInternet;
         private bool canContinue;
+        private LocationCollection stationPoints;
 
         /// <summary>
         /// Creates a new instance of MainPage, which refreshes the association dictionary,
-        /// clears all data, and sets the map view to 2.5x zoom on the world.
+        /// clears all data, and sets the map view to 5x zoom on the United States.
         /// </summary>
         public MainPage()
         {
@@ -64,6 +65,7 @@ namespace EeVeeCee1._0
             this.dontTrip = false;
             this.noInternet = false; // TODO: make this more accurate
             this.canContinue = true;
+            this.stationPoints = new LocationCollection();
             
         }
 
@@ -78,12 +80,14 @@ namespace EeVeeCee1._0
         {
             //clear event fields
             myMap.Children.Clear();
+            stationPoints.Clear();
             statusLabel.Text = "";
             failLabel.Visibility = Visibility.Collapsed;
             noResultLabel.Visibility = Visibility.Collapsed;
             timeOutLabel.Visibility = Visibility.Collapsed;
             badInputLabel.Visibility = Visibility.Collapsed;
             noInternetLabel.Visibility = Visibility.Collapsed;
+            statusLabel.Visibility = Visibility.Collapsed;
             populated.Clear();
             stationsFound = 0;
             this.canContinue = true;
@@ -184,102 +188,11 @@ namespace EeVeeCee1._0
             //all safe now
             else
             {
+                this.workingLabel.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 QueryAndPopulate(location, radius, ev_network, ev_charging_level);
             }
         }
 
-        /// <summary>
-        /// Execute connection to JSON API, queries data, and appends that data to local field qString.
-        /// </summary>
-        /// <param name="query"></param>
-        private void Execute(string query)
-        {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("https://developer.nrel.gov");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                try
-                {
-                    HttpResponseMessage response = client.GetAsync(query).Result;
-                    if (response.IsSuccessStatusCode)
-                    {
-                        Stream messageContent = response.Content.ReadAsStreamAsync().Result;
-                        StreamReader sr = new StreamReader(messageContent);
-                        string jString = sr.ReadToEnd();
-                        this.qString = jString;
-                        sr.Dispose();
-
-                    }
-                }
-                catch (AggregateException e)
-                {
-                    if (e.InnerException.Message.Equals("An error occurred while sending the request."))
-                    {
-                        //no internet
-                        noInternetLabel.Visibility = Visibility.Visible;
-                        noInternet = true;
-                        canContinue = false;
-                    }
-                }
-
-            }
-        }
-
-        /// <summary>
-        /// Displays all stations from qString on map as pushpins
-        /// </summary>
-        /// <param name="qString"></param>
-        /// <param name="radius"></param>
-        private void PlacePushpins(string qString, decimal radius, out int resultCount)
-        {
-            resultCount = 0;
-            try
-            {
-                Rootobject test = JsonConvert.DeserializeObject<Rootobject>(qString);
-                foreach (Fuel_Stations f in test.fuel_stations)
-                {
-                    Pushpin p = new Pushpin();
-                    p.Width *= 1.5;
-                    p.Height *= 1.5;
-                    //p.Text = f.station_name;
-                    Location pin = new Location(f.latitude, f.longitude);
-                    
-                    MapLayer.SetPosition(p, pin);
-                    ToolTipService.SetToolTip(p, f.station_name);
-                    populated.Add(f);
-                    p.Text = populated.Count.ToString(); //the size of the list is equal to the retrieval number
-                    myMap.Children.Add(p);
-                    resultCount++;
-
-                    
-                    //p.Tapped += pinTapped;
-                    p.Tapped += new TappedEventHandler(pinTapped);
-                }
-            }
-            //catch (JsonSerializationException)
-            //{
-            //    double lat, longi;
-            //    if (GetBadGPSLocation(qString, out longi, out lat))
-            //    {
-            //        this.myMap.SetView(new Location(lat, longi), 11.0);
-            //    }
-            //    //none found;
-            //    noResultLabel.Visibility = Visibility.Visible;
-            //}
-            catch (ArgumentNullException)
-            {
-                if (!noInternet)
-                {
-                    //time out
-                    timeOutLabel.Visibility = Visibility.Visible;
-                }
-                noInternet = false;
-                canContinue = false;
-                
-            }
-        }
         /// <summary>
         /// Generates the query, pings the server, parses the response, and displays all stations on map.
         /// </summary>
@@ -323,14 +236,20 @@ namespace EeVeeCee1._0
             {
                 Rootobject test = JsonConvert.DeserializeObject<Rootobject>(qString);
                 this.statusLabel.Text = stationsFound + (stationsFound == 1 ? " station found." : " stations found.");
+                this.workingLabel.Visibility = Visibility.Collapsed;
+                this.statusLabel.Visibility = Visibility.Visible;
                 Location focusCenter = new Location(test.latitude, test.longitude);
                 //if (radius < 50) { this.myMap.SetView(focusCenter, 15.0); }
                 //else if (radius < 150) { this.myMap.SetView(focusCenter, 12.0); }
                 //else { this.myMap.SetView(focusCenter, 8.0); }
-                this.myMap.SetView(focusCenter, 15.0);
+
+                //this.myMap.SetView(focusCenter, 15.0);
+                this.myMap.SetView(new LocationRect(this.stationPoints));
+
             }
 
         }
+
 
         /// <summary>
         /// Constructs a location-based query from the provided parameters
@@ -372,6 +291,105 @@ namespace EeVeeCee1._0
         }
 
         /// <summary>
+        /// Execute connection to JSON API, queries data, and appends that data to local field qString.
+        /// </summary>
+        /// <param name="query"></param>
+        private void Execute(string query)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://developer.nrel.gov");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                try
+                {
+                    HttpResponseMessage response = client.GetAsync(query).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Stream messageContent = response.Content.ReadAsStreamAsync().Result;
+                        StreamReader sr = new StreamReader(messageContent);
+                        string jString = sr.ReadToEnd();
+                        this.qString = jString;
+                        sr.Dispose();
+
+                    }
+                }
+                catch (AggregateException e)
+                {
+                    if (e.InnerException.Message.Equals("An error occurred while sending the request."))
+                    {
+                        workingLabel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                        //no internet
+                        noInternetLabel.Visibility = Visibility.Visible;
+                        noInternet = true;
+                        canContinue = false;
+                    }
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Displays all stations from qString on map as pushpins
+        /// </summary>
+        /// <param name="qString"></param>
+        /// <param name="radius"></param>
+        private void PlacePushpins(string qString, decimal radius, out int resultCount)
+        {
+            resultCount = 0;
+            try
+            {
+                Rootobject test = JsonConvert.DeserializeObject<Rootobject>(qString);
+                foreach (Fuel_Stations f in test.fuel_stations)
+                {
+                    //Pushpin p = new Pushpin();
+                    //p.Width = 300;
+                    //p.Height = 150;
+                    //p.Text = f.station_name;
+                    Location pinLocation = new Location(f.latitude, f.longitude);
+                    populated.Add(f);
+
+                    WidePushpin p = new WidePushpin(populated.Count.ToString()); //the size of the list is equal to the retrieval number
+
+                    MapLayer.SetPosition(p, pinLocation);
+                    MapLayer.SetPositionAnchor(p, new Point(15, 10));
+                    ToolTipService.SetToolTip(p, f.station_name);
+                    //p.Text = populated.Count.ToString(); 
+                    myMap.Children.Add(p);
+                    resultCount++;
+                    stationPoints.Add(pinLocation);
+                    //p.Tapped += pinTapped;
+                    p.Tapped += new TappedEventHandler(pinTapped);
+                }
+            }
+            //catch (JsonSerializationException)
+            //{
+            //    double lat, longi;
+            //    if (GetBadGPSLocation(qString, out longi, out lat))
+            //    {
+            //        this.myMap.SetView(new Location(lat, longi), 11.0);
+            //    }
+            //    //none found;
+            //    noResultLabel.Visibility = Visibility.Visible;
+            //}
+            catch (ArgumentNullException)
+            {
+                if (!noInternet)
+                {
+                    workingLabel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    //time out
+                    timeOutLabel.Visibility = Visibility.Visible;
+                }
+                noInternet = false;
+                canContinue = false;
+                
+            }
+        }
+       
+
+
+        /// <summary>
         /// Extracts GPS location from an unserializable JSON Response
         /// </summary>
         /// <param name="jasonQueryResult"></param>
@@ -411,7 +429,7 @@ namespace EeVeeCee1._0
         }
 
         /// <summary>
-        /// Sets the error message for bad location/radius input to visible
+        /// Sets the error message for bad location input to visible
         /// </summary>
         private void ShowBadInputMsg()
         {
@@ -419,7 +437,7 @@ namespace EeVeeCee1._0
         }
         
        /// <summary>
-       /// Shows an expanded tooltip for the tapped station
+       /// Shows an expanded StationInfoControl for the tapped station
        /// </summary>
        /// <param name="sender"></param>
        /// <param name="e"></param>
@@ -476,6 +494,8 @@ namespace EeVeeCee1._0
                 //infoBox.CloseButton.Tapped += CloseButton_Tapped;
                 infoBox.CloseButton.Tapped += new TappedEventHandler(CloseInfoControl);
                 //infoBox.KeyDown += new KeyEventHandler(CloseInfoControl);
+
+                myMap.SetView(anchorpoint, 15.0);
             }
 
 
@@ -487,6 +507,7 @@ namespace EeVeeCee1._0
         //        CloseInfoControl(sender, e as RoutedEventArgs);
         //    }
         //}
+
         /// <summary>
         /// Method to handle closure of StationInfoControl on the map
         /// </summary>
@@ -522,6 +543,11 @@ namespace EeVeeCee1._0
             }
         }
 
+        /// <summary>
+        /// Method handler for the checking event of a non-"all" checkbox in the network box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
 
@@ -538,6 +564,11 @@ namespace EeVeeCee1._0
             networkBox.SelectedIndex = -1;
         }
 
+        /// <summary>
+        /// Method handler for the unchecking event of a non-"all" checkbox in the network box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             this.dontTrip = true;
@@ -545,6 +576,11 @@ namespace EeVeeCee1._0
             networkBox.SelectedIndex = -1;
         }
 
+        /// <summary>
+        /// Method handler for when "all" in network box is unchecked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void allNetworksCheck_Unchecked(object sender, RoutedEventArgs e)
         {
             if (this.dontTrip) return;
@@ -561,6 +597,11 @@ namespace EeVeeCee1._0
             networkBox.SelectedIndex = -1;
         }
 
+        /// <summary>
+        /// Method handler for when "all" in the network box is checked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void allNetworksCheck_Checked(object sender, RoutedEventArgs e)
         {
             blinkNetworkCheck.IsChecked = true;
@@ -575,36 +616,37 @@ namespace EeVeeCee1._0
             networkBox.SelectedIndex = -1;
         }
 
-        private void CheckBox_Toggle(object sender, RoutedEventArgs e)
-        {
+        //private void CheckBox_Toggle(object sender, RoutedEventArgs e)
+        //{
 
-            if (((CheckBox) sender).IsChecked == true)
-            {
-                CheckBox_Unchecked(sender, e);
-                ((CheckBox)sender).IsChecked = false;
-            }
-            else
-            {
-                CheckBox_Checked(sender, e);
-                ((CheckBox)sender).IsChecked = true;
-            }
+        //    if (((CheckBox) sender).IsChecked == true)
+        //    {
+        //        CheckBox_Unchecked(sender, e);
+        //        ((CheckBox)sender).IsChecked = false;
+        //    }
+        //    else
+        //    {
+        //        CheckBox_Checked(sender, e);
+        //        ((CheckBox)sender).IsChecked = true;
+        //    }
             
-        }
+        //}
 
-        private void allNetworksCheck_Toggle(object sender, RoutedEventArgs e)
-        {
-            if (((CheckBox)sender).IsChecked == true)
-            {
-                allNetworksCheck_Unchecked(sender, e);
-                ((CheckBox)sender).IsChecked = false;
-            }
-            else
-            {
-                allNetworksCheck_Checked(sender, e);
-                ((CheckBox)sender).IsChecked = true;
-            }
-            networkBox.SelectedIndex = -1;
-        }
+        //private void allNetworksCheck_Toggle(object sender, RoutedEventArgs e)
+        //{
+        //    if (((CheckBox)sender).IsChecked == true)
+        //    {
+        //        allNetworksCheck_Unchecked(sender, e);
+        //        ((CheckBox)sender).IsChecked = false;
+        //    }
+        //    else
+        //    {
+        //        allNetworksCheck_Checked(sender, e);
+        //        ((CheckBox)sender).IsChecked = true;
+        //    }
+        //    networkBox.SelectedIndex = -1;
+        //}
+
 
         
 

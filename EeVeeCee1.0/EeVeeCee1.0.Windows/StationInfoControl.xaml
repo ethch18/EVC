@@ -8,26 +8,26 @@
     mc:Ignorable="d"
     d:DesignHeight="165"
     d:DesignWidth="250">
-    <Canvas HorizontalAlignment="Left" Height="165" VerticalAlignment="Top" Width="250" Background="AliceBlue">
-        <!-- <TextBlock x:Name="header" Text="Station" Foreground="Black" FontSize="15" Canvas.Top="0" FontFamily="Arial" FontWeight="ExtraBlack"/> -->
-        <TextBlock x:Name="networkHead" Text="Network: " Foreground="Black" FontSize="15" Canvas.Top="15" FontFamily="Arial" FontWeight="Bold"/>
-        <TextBlock x:Name="distanceHead" Text="Distance: " Foreground="Black" FontSize="15" Canvas.Top="30" FontFamily="Arial" FontWeight="Bold"/>
-        <TextBlock x:Name="addressHead" Text="Located at: " Foreground="Black" FontSize="15" Canvas.Top="45" FontFamily="Arial" FontWeight="Bold"/>
-        <TextBlock x:Name="levelOneHead" Text="L1: " Foreground="Black" FontSize="15" Canvas.Top="75" FontFamily="Arial" FontWeight="Bold"/>
-        <TextBlock x:Name="levelTwoHead" Text="L2: " Foreground="Black" FontSize="15" Canvas.Top="75" FontFamily="Arial" Canvas.Left="67" FontWeight="Bold"/>
-        <TextBlock x:Name="dcFastHead" Text="DC Fast: " Foreground="Black" FontSize="15" Canvas.Top="75" FontFamily="Arial" Canvas.Left="138" FontWeight="Bold"/>
-        <!-- <TextBlock x:Name="legacyHead" Text="Legacy: " Foreground="Black" FontSize="15" Canvas.Top="90" FontFamily="Arial" Canvas.Left="174" FontWeight="Bold"/> -->
-        <TextBlock x:Name="notesHead" Text="Notes: " Foreground="Black" FontSize="15" Canvas.Top="90" FontFamily="Arial" FontWeight="Bold"/>
-        <TextBlock x:Name="stationName" Foreground="Black" FontSize="15" Canvas.Top="0" FontFamily="Arial" Text="name" Canvas.Left="0" FontWeight="Bold" Width="233" TextTrimming="CharacterEllipsis"/>
-        <TextBlock x:Name="network" Foreground="Black" FontSize="15" Canvas.Top="15" FontFamily="Arial" Text="ThisNet" Canvas.Left="100"/>
-        <TextBlock x:Name="distance" Foreground="Black" FontSize="15" Canvas.Top="30" FontFamily="Arial" Text="x miles" Canvas.Left="100"/>
-        <TextBlock x:Name="addressLine1" Foreground="Black" FontSize="15" Canvas.Top="45" FontFamily="Arial" Canvas.Left="100" Height="17" Width="150" TextWrapping="WrapWholeWords"/>
-        <TextBlock x:Name="addressLine2" Foreground="Black" FontSize="15" Canvas.Top="60" FontFamily="Arial" Canvas.Left="100" Height="17" Width="150" TextWrapping="WrapWholeWords"/>
-        <TextBlock x:Name="l1Count" Foreground="Black" FontSize="15" Canvas.Top="75" FontFamily="Arial" Text="#" Canvas.Left="26"/>
-        <TextBlock x:Name="l2Count" Foreground="Black" FontSize="15" Canvas.Top="75" FontFamily="Arial" Text="#" Canvas.Left="93"/>
-        <TextBlock x:Name="dcCount" Foreground="Black" FontSize="15" Canvas.Top="75" FontFamily="Arial" Text="#" Canvas.Left="204"/>
-        <!-- <TextBlock x:Name="legacyCount" Foreground="Black" FontSize="13" Canvas.Top="90" FontFamily="Arial" Text="#" Canvas.Left="235"/> -->
-        <TextBlock x:Name="notes" Foreground="Black" FontSize="13" Canvas.Top="105" FontFamily="Arial" Text="Lorem ipsum sit dolor lorem ipsum sit dolor" Height="60" Width="250" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis"/>
+    <Canvas HorizontalAlignment="Left" Height="170" VerticalAlignment="Top" Width="250" Background="AliceBlue">
+        <!-- <TextBlock x:Name="header" Text="Station" Foreground="Black" FontSize="15" Canvas.Top="0" FontFamily="Global User Interface" FontWeight="ExtraBlack"/> -->
+        <TextBlock x:Name="networkHead" Text="Network: " Foreground="Black" FontSize="15" Canvas.Top="15" FontFamily="Global User Interface" FontWeight="Bold"/>
+        <TextBlock x:Name="distanceHead" Text="Distance: " Foreground="Black" FontSize="15" Canvas.Top="30" FontFamily="Global User Interface" FontWeight="Bold"/>
+        <TextBlock x:Name="addressHead" Text="Located at: " Foreground="Black" FontSize="15" Canvas.Top="45" FontFamily="Global User Interface" FontWeight="Bold"/>
+        <TextBlock x:Name="levelOneHead" Text="L1: " Foreground="Black" FontSize="15" Canvas.Top="75" FontFamily="Global User Interface" FontWeight="Bold"/>
+        <TextBlock x:Name="levelTwoHead" Text="L2: " Foreground="Black" FontSize="15" Canvas.Top="75" FontFamily="Global User Interface" Canvas.Left="67" FontWeight="Bold"/>
+        <TextBlock x:Name="dcFastHead" Text="DC Fast: " Foreground="Black" FontSize="15" Canvas.Top="75" FontFamily="Global User Interface" Canvas.Left="138" FontWeight="Bold"/>
+        <!-- <TextBlock x:Name="legacyHead" Text="Legacy: " Foreground="Black" FontSize="15" Canvas.Top="90" FontFamily="Global User Interface" Canvas.Left="174" FontWeight="Bold"/> -->
+        <TextBlock x:Name="notesHead" Text="Notes: " Foreground="Black" FontSize="15" Canvas.Top="90" FontFamily="Global User Interface" FontWeight="Bold"/>
+        <TextBlock x:Name="stationName" Foreground="Black" FontSize="15" Canvas.Top="0" FontFamily="Global User Interface" Text="name" Canvas.Left="0" FontWeight="Bold" Width="233" TextTrimming="CharacterEllipsis"/>
+        <TextBlock x:Name="network" Foreground="Black" FontSize="15" Canvas.Top="15" FontFamily="Global User Interface" Text="ThisNet" Canvas.Left="100"/>
+        <TextBlock x:Name="distance" Foreground="Black" FontSize="15" Canvas.Top="30" FontFamily="Global User Interface" Text="x miles" Canvas.Left="100"/>
+        <TextBlock x:Name="addressLine1" Foreground="Black" FontSize="15" Canvas.Top="45" FontFamily="Global User Interface" Canvas.Left="100" Height="17" Width="150" TextWrapping="WrapWholeWords"/>
+        <TextBlock x:Name="addressLine2" Foreground="Black" FontSize="15" Canvas.Top="60" FontFamily="Global User Interface" Canvas.Left="100" Height="17" Width="150" TextWrapping="WrapWholeWords"/>
+        <TextBlock x:Name="l1Count" Foreground="Black" FontSize="15" Canvas.Top="75" FontFamily="Global User Interface" Text="#" Canvas.Left="26"/>
+        <TextBlock x:Name="l2Count" Foreground="Black" FontSize="15" Canvas.Top="75" FontFamily="Global User Interface" Text="#" Canvas.Left="93"/>
+        <TextBlock x:Name="dcCount" Foreground="Black" FontSize="15" Canvas.Top="75" FontFamily="Global User Interface" Text="#" Canvas.Left="204"/>
+        <!-- <TextBlock x:Name="legacyCount" Foreground="Black" FontSize="13" Canvas.Top="90" FontFamily="Global User Interface" Text="#" Canvas.Left="235"/> -->
+        <TextBlock x:Name="notes" Foreground="Black" FontSize="13" Canvas.Top="105" FontFamily="Global User Interface" Text="Lorem ipsum sit dolor lorem ipsum sit dolor" Height="65" Width="250" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis"/>
         <Button x:Name="closeButton" Content="X" Canvas.Left="230" Canvas.Top="-3" Width="23" Height="23" Foreground="Gray" Background="Black" BorderBrush="Gray" FontSize="9" HorizontalAlignment="Right" FontStretch="UltraCondensed" Padding="0" VerticalAlignment="Top"/>
 
 
