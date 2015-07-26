@@ -61,7 +61,7 @@ namespace EeVeeCee1._0
 
             this.InitializeComponent();
             this.allNetworksCheck.IsChecked = true;
-            this.myMap.SetView(new Location(39.833, -98.533), 5);
+            this.myMap.SetView(new Location(39.833, -98.533), 5.0);
             this.dontTrip = false;
             this.noInternet = false; // TODO: make this more accurate
             this.canContinue = true;
@@ -495,8 +495,16 @@ namespace EeVeeCee1._0
                 //infoBox.CloseButton.Tapped += CloseButton_Tapped;
                 infoBox.CloseButton.Tapped += new TappedEventHandler(CloseInfoControl);
                 //infoBox.KeyDown += new KeyEventHandler(CloseInfoControl);
-
-                myMap.SetView(anchorpoint, 15.0);
+                
+                if (myMap.ZoomLevel >= 14.5)
+                {
+                    myMap.SetView(anchorpoint);
+                }
+                else
+                {
+                    myMap.SetView(anchorpoint, 15.0);
+                }
+                
             }
 
 
