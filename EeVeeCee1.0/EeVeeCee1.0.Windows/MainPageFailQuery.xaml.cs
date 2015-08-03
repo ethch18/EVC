@@ -30,7 +30,7 @@ namespace EeVeeCee1._0
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPageFailQuery : Page
     {
         private const int QUERY_RESULT_LIMIT = 200;
 
@@ -50,7 +50,7 @@ namespace EeVeeCee1._0
         /// Creates a new instance of MainPage, which refreshes the association dictionary,
         /// clears all data, and sets the map view to 5x zoom on the United States.
         /// </summary>
-        public MainPage()
+        public MainPageFailQuery()
         {
             //initialize variables
             
@@ -60,7 +60,7 @@ namespace EeVeeCee1._0
             this.stationsFound = 0;
 
             this.InitializeComponent();
-            this.allNetworksCheck.IsChecked = true;
+            this.QControl.AllNetworksCheck.IsChecked = true;
             this.myMap.SetView(new Location(39.833, -98.533), 5.0);
             this.dontTrip = false;
             this.noInternet = false; // TODO: make this more accurate
@@ -81,25 +81,25 @@ namespace EeVeeCee1._0
             //clear event fields
             myMap.Children.Clear();
             stationPoints.Clear();
-            statusLabel.Text = "";
-            failLabel.Visibility = Visibility.Collapsed;
-            noResultLabel.Visibility = Visibility.Collapsed;
-            timeOutLabel.Visibility = Visibility.Collapsed;
-            badInputLabel.Visibility = Visibility.Collapsed;
-            noInternetLabel.Visibility = Visibility.Collapsed;
-            statusLabel.Visibility = Visibility.Collapsed;
+            QControl.StatusLabel.Text = "";
+            QControl.FailLabel.Visibility = Visibility.Collapsed;
+            QControl.NoResultLabel.Visibility = Visibility.Collapsed;
+            QControl.TimeOutLabel.Visibility = Visibility.Collapsed;
+            QControl.BadInputLabel.Visibility = Visibility.Collapsed;
+            QControl.NoInternetLabel.Visibility = Visibility.Collapsed;
+            QControl.StatusLabel.Visibility = Visibility.Collapsed;
             populated.Clear();
             stationsFound = 0;
             this.canContinue = true;
 
             //populate variables, or route to ShowFailMsg() or ShowBadInputMsg() if improper input
-            string location = this.locationBox.Text;
+            string location = this.QControl.LocationBox.Text;
             
             //string tempRadius = this.radiusBox.Text;
             string tempRadius;
             try
             {
-                tempRadius = (string)((ListBoxItem)this.radiusBox.SelectedValue).Content;
+                tempRadius = (string)((ListBoxItem)this.QControl.RadiusBox.SelectedValue).Content;
             }
             catch (NullReferenceException)
             {
@@ -111,7 +111,7 @@ namespace EeVeeCee1._0
             string ev_charging_level;
             try
             {
-                 ev_charging_level = ((string)((ListBoxItem)this.chargeLevelBox.SelectedValue).Content);
+                ev_charging_level = ((string)((ListBoxItem)this.QControl.ChargeLevelBox.SelectedValue).Content);
             }
             catch (NullReferenceException)
             {
@@ -126,29 +126,30 @@ namespace EeVeeCee1._0
             ev_charging_level = ev_charging_level.ToLower();
             
             string ev_network = "";
-            if (allNetworksCheck.IsChecked == true)
+            if (QControl.AllNetworksCheck.IsChecked == true)
             {
                 ev_network = "all";
             }
             else
             {
-                if (blinkNetworkCheck.IsChecked == true)
+            if (QControl.AllNetworksCheck.IsChecked == true)
+                if (QControl.BlinkNetworkCheck.IsChecked == true)
                 {
                     ev_network += "Blink Network,";
                 }
-                if (chargePointCheck.IsChecked == true)
+                if (QControl.ChargePointCheck.IsChecked == true)
                 {
                     ev_network += "ChargePoint Network,";
                 }
-                if (eVgoCheck.IsChecked == true)
+                if (QControl.EVgoCheck.IsChecked == true)
                 {
                     ev_network += "eVgo Network,";
                 }
-                if (EVSECheck.IsChecked == true)
+                if (QControl.EvSECheck.IsChecked == true)
                 {
                     ev_network += "EVSE LLC WebNet,";
                 }
-                if (rechargeAccessCheck.IsChecked == true)
+                if (QControl.RechargeAccessCheck.IsChecked == true)
                 {
                     ev_network += "RechargeAccess,";
                 }
@@ -156,7 +157,7 @@ namespace EeVeeCee1._0
                 //{
                 //    ev_network += "SemaCharge Network";
                 //}
-                if (shorepowerCheck.IsChecked == true)
+                if (QControl.ShorepowerCheck.IsChecked == true)
                 {
                     ev_network += "Shorepower,";
                 }
@@ -197,8 +198,7 @@ namespace EeVeeCee1._0
             //all safe now
             else
             {
-                this.labelGrid.Visibility = Visibility.Visible;
-                this.workingLabel.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                this.QControl.WorkingLabel.Visibility = Windows.UI.Xaml.Visibility.Visible;
                 QueryAndPopulate(location, radius, ev_network, ev_charging_level);
             }
         }
@@ -245,10 +245,9 @@ namespace EeVeeCee1._0
             if (canContinue)
             {
                 Rootobject test = JsonConvert.DeserializeObject<Rootobject>(qString);
-                this.statusLabel.Text = stationsFound + (stationsFound == 1 ? " station found." : " stations found.");
-                this.workingLabel.Visibility = Visibility.Collapsed;
-                this.labelGrid.Visibility = Visibility.Visible;
-                this.statusLabel.Visibility = Visibility.Visible;
+                this.QControl.StatusLabel.Text = stationsFound + (stationsFound == 1 ? " station found." : " stations found.");
+                this.QControl.WorkingLabel.Visibility = Visibility.Collapsed;
+                this.QControl.StatusLabel.Visibility = Visibility.Visible;
                 Location focusCenter = new Location(test.latitude, test.longitude);
                 //if (radius < 50) { this.myMap.SetView(focusCenter, 15.0); }
                 //else if (radius < 150) { this.myMap.SetView(focusCenter, 12.0); }
@@ -330,10 +329,9 @@ namespace EeVeeCee1._0
                 {
                     if (e.InnerException.Message.Equals("An error occurred while sending the request."))
                     {
-                        workingLabel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                        QControl.WorkingLabel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                         //no internet
-                        this.labelGrid.Visibility = Visibility.Visible;
-                        noInternetLabel.Visibility = Visibility.Visible;
+                        QControl.NoInternetLabel.Visibility = Visibility.Visible;
                         noInternet = true;
                         canContinue = false;
                     }
@@ -383,17 +381,15 @@ namespace EeVeeCee1._0
             //        this.myMap.SetView(new Location(lat, longi), 11.0);
             //    }
             //    //none found;
-                //this.labelGrid.Visibility = Visibility.Visible;
             //    noResultLabel.Visibility = Visibility.Visible;
             //}
             catch (ArgumentNullException)
             {
                 if (!noInternet)
                 {
-                    workingLabel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                    QControl.WorkingLabel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     //time out
-                    this.labelGrid.Visibility = Visibility.Visible;
-                    timeOutLabel.Visibility = Visibility.Visible;
+                    QControl.TimeOutLabel.Visibility = Visibility.Visible;
                 }
                 noInternet = false;
                 canContinue = false;
@@ -439,8 +435,7 @@ namespace EeVeeCee1._0
         /// </summary>
         private void ShowFailMsg()
         {
-            this.labelGrid.Visibility = Visibility.Visible;
-            failLabel.Visibility = Visibility.Visible;
+            QControl.FailLabel.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -448,8 +443,7 @@ namespace EeVeeCee1._0
         /// </summary>
         private void ShowBadInputMsg()
         {
-            this.labelGrid.Visibility = Visibility.Visible;
-            badInputLabel.Visibility = Visibility.Visible;
+            QControl.BadInputLabel.Visibility = Visibility.Visible;
         }
         
        /// <summary>
@@ -576,17 +570,17 @@ namespace EeVeeCee1._0
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
 
-            if (blinkNetworkCheck.IsChecked == true
-                && chargePointCheck.IsChecked == true
-                && eVgoCheck.IsChecked == true
-                && EVSECheck.IsChecked == true
-                && rechargeAccessCheck.IsChecked == true
+            if (QControl.BlinkNetworkCheck.IsChecked == true
+                && QControl.ChargePointCheck.IsChecked == true
+                && QControl.EVgoCheck.IsChecked == true
+                && QControl.EvSECheck.IsChecked == true
+                && QControl.RechargeAccessCheck.IsChecked == true
                 //&& semaChargeCheck.IsChecked == true
-                && shorepowerCheck.IsChecked == true)
+                && QControl.ShorepowerCheck.IsChecked == true)
             {
-                allNetworksCheck.IsChecked = true;
+                QControl.AllNetworksCheck.IsChecked = true;
             }
-            networkBox.SelectedIndex = -1;
+            QControl.NetworkBox.SelectedIndex = -1;
         }
 
         /// <summary>
@@ -597,8 +591,8 @@ namespace EeVeeCee1._0
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             this.dontTrip = true;
-            this.allNetworksCheck.IsChecked = false;
-            networkBox.SelectedIndex = -1;
+            this.QControl.AllNetworksCheck.IsChecked = false;
+            QControl.NetworkBox.SelectedIndex = -1;
         }
 
         /// <summary>
@@ -610,16 +604,16 @@ namespace EeVeeCee1._0
         {
             if (this.dontTrip) return;
 
-            blinkNetworkCheck.IsChecked = false;
-            chargePointCheck.IsChecked = false;
-            eVgoCheck.IsChecked = false;
-            EVSECheck.IsChecked = false;
-            rechargeAccessCheck.IsChecked = false;
+            QControl.BlinkNetworkCheck.IsChecked = false;
+            QControl.ChargePointCheck.IsChecked = false;
+            QControl.EVgoCheck.IsChecked = false;
+            QControl.EvSECheck.IsChecked = false;
+            QControl.RechargeAccessCheck.IsChecked = false;
             //semaChargeCheck.IsChecked = false;
-            shorepowerCheck.IsChecked = false;
+            QControl.ShorepowerCheck.IsChecked = false;
 
             this.dontTrip = false;
-            networkBox.SelectedIndex = -1;
+            QControl.NetworkBox.SelectedIndex = -1;
         }
 
         /// <summary>
@@ -629,16 +623,16 @@ namespace EeVeeCee1._0
         /// <param name="e"></param>
         private void allNetworksCheck_Checked(object sender, RoutedEventArgs e)
         {
-            blinkNetworkCheck.IsChecked = true;
-            chargePointCheck.IsChecked = true;
-            eVgoCheck.IsChecked = true;
-            EVSECheck.IsChecked = true;
-            rechargeAccessCheck.IsChecked = true;
+            QControl.BlinkNetworkCheck.IsChecked = true;
+            QControl.ChargePointCheck.IsChecked = true;
+            QControl.EVgoCheck.IsChecked = true;
+            QControl.EvSECheck.IsChecked = true;
+            QControl.RechargeAccessCheck.IsChecked = true;
             //semaChargeCheck.IsChecked = true;
-            shorepowerCheck.IsChecked = true;
+            QControl.ShorepowerCheck.IsChecked = true;
 
 
-            networkBox.SelectedIndex = -1;
+            QControl.NetworkBox.SelectedIndex = -1;
         }
 
         //private void CheckBox_Toggle(object sender, RoutedEventArgs e)

@@ -103,11 +103,14 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="MainPage - Copy.xaml.cs">
-      <DependentUpon>MainPage - Copy.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPageFailQuery.xaml.cs">
+      <DependentUpon>MainPageFailQuery.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainPageBackup.xaml.cs">
+      <DependentUpon>MainPageBackup.xaml</DependentUpon>
     </Compile>
     <Compile Include="PrivacyPolicyFlyout.xaml.cs">
       <DependentUpon>PrivacyPolicyFlyout.xaml</DependentUpon>
@@ -125,6 +128,9 @@
     <Compile Include="Station.cs" />
     <Compile Include="StationInfoControl.xaml.cs">
       <DependentUpon>StationInfoControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StuffHolder.xaml.cs">
+      <DependentUpon>StuffHolder.xaml</DependentUpon>
     </Compile>
     <Compile Include="WidePushpin.xaml.cs">
       <DependentUpon>WidePushpin.xaml</DependentUpon>
@@ -155,11 +161,15 @@
     <Content Include="Assets\ControlBackground.png" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MainPage - Copy.xaml">
+    <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="MainPageFailQuery.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainPageBackup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -180,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="StationInfoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StuffHolder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
