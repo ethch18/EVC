@@ -19,7 +19,7 @@ namespace EeVeeCee1._0
 {
     public sealed partial class WidePushpin : UserControl
     {
-        public String Content
+        public new String Content
         {
             get
             {

@@ -1,0 +1,63 @@
+﻿<UserControl
+    x:Class="EeVeeCee1._0.QueryOverlayControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EeVeeCee1._0"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="190"
+    d:DesignWidth="450">
+
+    <Canvas Width="450" Height="190" Background="Black">
+        <StackPanel>
+            <Grid Name="locationGrid" HorizontalAlignment="Left" Width="450">
+                <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="15,20,0,0" TextWrapping="Wrap" Text="Location" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" ToolTipService.ToolTip="See Settings -&gt; Help for valid location formatting"/>
+                <TextBox x:Name="locationBox" Grid.Column="2" HorizontalAlignment="Left" Margin="100,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="346" PlaceholderText="e.g. Los Angeles, CA"  Height="44" FontFamily="Global User Interface" Padding="10" ToolTipService.ToolTip=""/>
+            </Grid>
+            <Grid Name="radiusAndChargeLevelGrid" HorizontalAlignment="Left" Width="450" >
+                <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="15,20,0,0" TextWrapping="Wrap" Text="Radius" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" ToolTipService.ToolTip="See Settings -&gt; Help for field explanation"/>
+                <ComboBox x:Name="radiusBox" Margin="100,5,0,0" VerticalAlignment="Top"  FontFamily="Global User Interface" PlaceholderText="(miles)" Height="44" SelectedIndex="-1" HorizontalAlignment="Left" Width="88">
+                    <ListBoxItem Content="1" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+                    <ListBoxItem Content="5" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+                    <ListBoxItem Content="10" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+                    <ListBoxItem Content="25" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+                    <ListBoxItem Content="50" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+                    <ListBoxItem Content="100" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+                    <ListBoxItem Content="200" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+                </ComboBox>
+                <TextBlock HorizontalAlignment="Left" Margin="240,20,0,0" TextWrapping="Wrap" Text="Charge Level" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" ToolTipService.ToolTip="See Settings -&gt; Help for field explanation"/>
+                <ComboBox x:Name="chargeLevelBox" HorizontalAlignment="Left" Margin="346,5,0,0" VerticalAlignment="Top" Width="100" PlaceholderText="Select..." MaxDropDownHeight="Infinity" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False"  Height="44" FontFamily="Global User Interface" SelectedIndex="-1">
+                    <ListBoxItem Content="All" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+                    <ListBoxItem Content="1" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+                    <ListBoxItem Content="2" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+                    <ListBoxItem Content="DC Fast" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
+                    <!-- <ListBoxItem Content="Legacy" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/> -->
+                </ComboBox>
+            </Grid>
+            <Grid Name="networkAndGoGrid"  HorizontalAlignment="Left" Width="450">
+                <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="10,20,0,0" TextWrapping="Wrap" Text="Network" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" ToolTipService.ToolTip="See Settings -&gt; Help for field explanation"/>
+                <ComboBox x:Name="networkBox" Grid.Column="2" HorizontalAlignment="Left" Margin="100,5,0,0" VerticalAlignment="Top" Width="158" PlaceholderText="Select..." MaxDropDownHeight="Infinity" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" SelectedIndex="0" Height="44" FontFamily="Global User Interface">
+                    <CheckBox x:Name="allNetworksCheck" Content="All" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black" />
+                    <CheckBox x:Name="blinkNetworkCheck" Content="Blink Network" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  />
+                    <CheckBox x:Name="chargePointCheck" Content="ChargePoint Network" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"/>
+                    <CheckBox x:Name="eVgoCheck" Content="eVgo Network" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  />
+                    <CheckBox x:Name="EVSECheck" Content="EVSE LLC WebNet" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black" />
+                    <CheckBox x:Name="rechargeAccessCheck" Content="RechargeAccess" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  />
+                    <!-- <CheckBox x:Name="semaChargeCheck" Content="SemaCharge Network" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked"/> -->
+                    <CheckBox x:Name="shorepowerCheck" Content="Shorepower" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  />
+                </ComboBox>
+                <Button x:Name="goButton" Content="Go" HorizontalAlignment="Left" Margin="392,5,0,0" VerticalAlignment="Top" FontFamily="Global User Interface"/>
+            </Grid>
+            <Grid x:Name="messageGrid" HorizontalAlignment="Left" Width="450">
+                <TextBlock x:Name="timeOutLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Request timed out. Please try a more specific query and verify the location." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
+                <TextBlock x:Name="noResultLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="No results found." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
+                <TextBlock x:Name="failLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Please fill all fields." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
+                <TextBlock x:Name="badInputLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Please enter valid location." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
+                <TextBlock x:Name="statusLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="15" Foreground="White" Visibility="Visible" FontWeight="Bold"/>
+                <TextBlock x:Name="noInternetLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Request timed out.  The internet is currently unavailable." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
+                <TextBlock x:Name="workingLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Working..." VerticalAlignment="Top" FontSize="15" Foreground="White" Visibility="Collapsed" FontWeight="Bold"/>
+            </Grid>
+        </StackPanel>
+    </Canvas>
+</UserControl>

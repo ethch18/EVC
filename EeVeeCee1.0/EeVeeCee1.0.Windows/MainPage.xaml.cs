@@ -96,7 +96,16 @@ namespace EeVeeCee1._0
             string location = this.locationBox.Text;
             
             //string tempRadius = this.radiusBox.Text;
-            string tempRadius = (string)((ListBoxItem)this.radiusBox.SelectedValue).Content;
+            string tempRadius;
+            try
+            {
+                tempRadius = (string)((ListBoxItem)this.radiusBox.SelectedValue).Content;
+            }
+            catch (NullReferenceException)
+            {
+                ShowFailMsg();
+                return;
+            }
             decimal radius;
 
             string ev_charging_level;

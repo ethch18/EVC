@@ -11,11 +11,11 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <bm:Map ZoomLevel="7.5" Credentials="AkIz1619KtztMcHec-vGpU_cTHN69_-wGpWsWrNU9vluXhZAXnisKeVV9RQyQZCS" x:Name="myMap" Margin="0,85,0,0" IsDoubleTapEnabled="False" IsRightTapEnabled="False" HomeRegion=""/>
         <Grid HorizontalAlignment="Left" Grid.Row="1">
-            <Grid Name="locationGrid" Margin="0,0,776,714" Grid.Column="1">
+            <Grid Name="locationGrid" Margin="0,0,0,714" HorizontalAlignment="Left" Width="466">
                 <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="15,20,0,0" TextWrapping="Wrap" Text="Location" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" ToolTipService.ToolTip="See Settings -&gt; Help for valid location formatting"/>
                 <TextBox x:Name="locationBox" Grid.Column="2" HorizontalAlignment="Left" Margin="100,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="346" PlaceholderText="e.g. Los Angeles, CA" KeyUp="CheckForEnter" Height="44" FontFamily="Global User Interface" Padding="10" ToolTipService.ToolTip=""/>
             </Grid>
-            <Grid Name="radiusGrid" Margin="466,0,586,714" Grid.Column="2">
+            <Grid Name="radiusGrid" Margin="466,0,711,714">
                 <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="15,20,0,0" TextWrapping="Wrap" Text="Radius" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" ToolTipService.ToolTip="See Settings -&gt; Help for field explanation"/>
                 <ComboBox x:Name="radiusBox" HorizontalAlignment="Left" Margin="75,5,0,0" VerticalAlignment="Top" Width="88" KeyUp="CheckForEnter" FontFamily="Global User Interface" PlaceholderText="(miles)" Height="44" SelectedIndex="-1">
                     <ListBoxItem Content="1" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
@@ -54,7 +54,7 @@
             <TextBlock x:Name="timeOutLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,55,0,0" TextWrapping="Wrap" Text="Request timed out. Please try a more specific query and verify the location." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
             <TextBlock x:Name="noResultLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,55,0,0" TextWrapping="Wrap" Text="No results found." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
             <TextBlock x:Name="failLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,55,0,0" TextWrapping="Wrap" Text="Please fill all fields." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
-            <TextBlock x:Name="badInputLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,55,0,0" TextWrapping="Wrap" Text="Please enter valid location and/or radius." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
+            <TextBlock x:Name="badInputLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,55,0,0" TextWrapping="Wrap" Text="Please enter valid location." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
             <TextBlock x:Name="statusLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,55,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="15" Foreground="White" Visibility="Visible" FontWeight="Bold"/>
             <TextBlock x:Name="noInternetLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,55,0,0" TextWrapping="Wrap" Text="Request timed out.  The internet is currently unavailable." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
             <TextBlock x:Name="workingLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,55,0,0" TextWrapping="Wrap" Text="Working..." VerticalAlignment="Top" FontSize="15" Foreground="White" Visibility="Collapsed" FontWeight="Bold"/>
