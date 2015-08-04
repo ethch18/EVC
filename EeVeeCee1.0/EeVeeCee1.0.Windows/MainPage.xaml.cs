@@ -45,6 +45,7 @@ namespace EeVeeCee1._0
         private bool noInternet;
         private bool canContinue;
         private LocationCollection stationPoints;
+        private Windows.Devices.Geolocation.Geolocator geolocator;
 
         /// <summary>
         /// Creates a new instance of MainPage, which refreshes the association dictionary,
@@ -66,7 +67,8 @@ namespace EeVeeCee1._0
             this.noInternet = false; // TODO: make this more accurate
             this.canContinue = true;
             this.stationPoints = new LocationCollection();
-            
+
+            this.geolocator = new Windows.Devices.Geolocation.Geolocator();
         }
 
 
@@ -505,7 +507,7 @@ namespace EeVeeCee1._0
                 infoBox.Notes = (String.IsNullOrWhiteSpace(f.intersection_directions)) ? "" : f.intersection_directions;
 
                 Location anchorpoint = new Location(f.latitude, f.longitude);
-                MapLayer.SetPositionAnchor(infoBox, new Point(0, 165));
+                MapLayer.SetPositionAnchor(infoBox, new Point(10, 210));
                 MapLayer.SetPosition(infoBox, anchorpoint);
                 myMap.Children.Add(infoBox);
                 //infoBox.CloseButton.Tapped += CloseButton_Tapped;
@@ -520,6 +522,7 @@ namespace EeVeeCee1._0
                 {
                     myMap.SetView(anchorpoint, 15.0);
                 }
+
                 
             }
 
@@ -640,6 +643,30 @@ namespace EeVeeCee1._0
 
             networkBox.SelectedIndex = -1;
         }
+
+        /// <summary>
+        /// Sets the control grid to semitransparent when the pointer enters the map
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void myMap_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            this.controlGrid.Opacity = 0.5;
+            this.labelGrid.Opacity = 0.5;
+        }
+
+        /// <summary>
+        /// Sets the control grid to opaque when the pointer is not on the map
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void myMap_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            this.controlGrid.Opacity = 1.0;
+            this.labelGrid.Opacity = 1.0;
+        }
+
+
 
         //private void CheckBox_Toggle(object sender, RoutedEventArgs e)
         //{
