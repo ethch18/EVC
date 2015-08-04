@@ -45,7 +45,7 @@ namespace EeVeeCee1._0
         private bool noInternet;
         private bool canContinue;
         private LocationCollection stationPoints;
-        private Windows.Devices.Geolocation.Geolocator geolocator;
+        //private Windows.Devices.Geolocation.Geolocator geolocator;
 
         /// <summary>
         /// Creates a new instance of MainPage, which refreshes the association dictionary,
@@ -68,7 +68,10 @@ namespace EeVeeCee1._0
             this.canContinue = true;
             this.stationPoints = new LocationCollection();
 
-            this.geolocator = new Windows.Devices.Geolocation.Geolocator();
+            //this.geolocator = new Windows.Devices.Geolocation.Geolocator();
+            //https://msdn.microsoft.com/en-us/library/windows/desktop/windows.devices.geolocation.geolocator.aspx
+            //https://msdn.microsoft.com/en-us/library/windows/desktop/br225537.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
+
         }
 
 
