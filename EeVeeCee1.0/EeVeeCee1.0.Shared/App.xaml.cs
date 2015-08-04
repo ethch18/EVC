@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.ApplicationSettings;
+//using Windows.Devices.Geolocation;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
@@ -38,7 +39,20 @@ namespace EeVeeCee1._0
         {
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
+            //CheckLocation();
         }
+
+        //private async System.Threading.Tasks.Task<bool> CheckLocation()
+        //{
+        //    Geolocator gl = new Geolocator();
+        //    await gl.GetGeopositionAsync();
+        //    if (gl.LocationStatus == PositionStatus.Disabled)
+        //    {
+        //        await new Windows.UI.Popups.MessageDialog("Location Services are disabled.  Please enable them for location functionality.").ShowAsync();
+        //        return false;
+        //    }
+        //    return true;
+        //}
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points

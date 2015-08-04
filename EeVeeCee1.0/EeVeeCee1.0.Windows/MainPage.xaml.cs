@@ -199,30 +199,47 @@ namespace EeVeeCee1._0
             }
 
 
-            //all safe now
+            //all safe now, except for lat-long case
             else
             {
                 this.labelGrid.Visibility = Visibility.Visible;
                 this.workingLabel.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                QueryAndPopulate(location, radius, ev_network, ev_charging_level);
+                string query;
+                if (IsLatLong(location))
+                {
+                    string[] latLong = location.Split(',');
+                    decimal latitude, longitude;
+                    if (!decimal.TryParse(latLong[0], out latitude))
+                    {
+                        ShowBadInputMsg();
+                        return;
+                    }
+                    if (!decimal.TryParse(latLong[1], out longitude))
+                    {
+                        ShowBadInputMsg();
+                        return;
+                    }
+                    query = ConstructLatLongQuery(latitude, longitude, radius, ev_network, ev_charging_level);
+                }
+                else
+                {
+                    query = ConstructQuery(location, radius, ev_network, ev_charging_level);
+                }
+                 
+
+                ////debug query
+                //string query = head + key + "&location=" + location
+                //    + "&status=E&access=public&fuel_type=ELEC";
+                QueryAndPopulate(query);
             }
         }
 
         /// <summary>
         /// Generates the query, pings the server, parses the response, and displays all stations on map.
         /// </summary>
-        /// <param name="location"></param>
-        /// <param name="radius"></param>
-        /// <param name="ev_network"></param>
-        /// <param name="ev_charging_level"></param>
-        private void QueryAndPopulate(string location, decimal radius, string ev_network, string ev_charging_level)
+        /// <param name="query"></param>
+        private void QueryAndPopulate(string query)
         {
-            string query = ConstructQuery(location, radius, ev_network, ev_charging_level);
-
-
-            ////debug query
-            //string query = head + key + "&location=" + location
-            //    + "&status=E&access=public&fuel_type=ELEC";
 
             int offset = 0;
             int perQueryCount = 0;
@@ -240,7 +257,7 @@ namespace EeVeeCee1._0
 #endif
                 perQueryCount = 0;
                 //Plot stations onto map
-                PlacePushpins(qString, radius, out perQueryCount);
+                PlacePushpins(qString, out perQueryCount);
 
                 this.stationsFound += perQueryCount;
 
@@ -351,8 +368,8 @@ namespace EeVeeCee1._0
         /// Displays all stations from qString on map as pushpins
         /// </summary>
         /// <param name="qString"></param>
-        /// <param name="radius"></param>
-        private void PlacePushpins(string qString, decimal radius, out int resultCount)
+        /// <param name="resultCount"></param>
+        private void PlacePushpins(string qString, out int resultCount)
         {
             resultCount = 0;
             try
@@ -510,7 +527,7 @@ namespace EeVeeCee1._0
                 infoBox.Notes = (String.IsNullOrWhiteSpace(f.intersection_directions)) ? "" : f.intersection_directions;
 
                 Location anchorpoint = new Location(f.latitude, f.longitude);
-                MapLayer.SetPositionAnchor(infoBox, new Point(10, 210));
+                MapLayer.SetPositionAnchor(infoBox, new Point(20, 210));
                 MapLayer.SetPosition(infoBox, anchorpoint);
                 myMap.Children.Add(infoBox);
                 //infoBox.CloseButton.Tapped += CloseButton_Tapped;
@@ -530,6 +547,17 @@ namespace EeVeeCee1._0
             }
 
 
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns>True if and only if the string is in the form of a lat/long expression</returns>
+        private bool IsLatLong(string location)
+        {
+            System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex(@"^[\+-]?\d*\.?\d*\,\s?[\+-]?\d*\.?\d*$");
+            return r.IsMatch(location);
         }
         //private void InfoControlKeyPressed(object sender, KeyRoutedEventArgs e)
         //{

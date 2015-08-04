@@ -29,7 +29,7 @@
         <!-- <TextBlock x:Name="legacyCount" Foreground="Black" FontSize="13" Canvas.Top="90" FontFamily="Global User Interface" Text="#" Canvas.Left="235"/> -->
         <TextBlock x:Name="notes" Foreground="Black" FontSize="13" Canvas.Top="105" FontFamily="Global User Interface" Text="Lorem ipsum sit dolor lorem ipsum sit dolor" Height="65" Width="250" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis"/>
         <Button x:Name="closeButton" Content="X" Canvas.Left="230" Canvas.Top="-3" Width="23" Height="23" Foreground="Gray" Background="Black" BorderBrush="Gray" FontSize="9" HorizontalAlignment="Right" FontStretch="UltraCondensed" Padding="0" VerticalAlignment="Top"/>
-        <Polygon Points="0,170 30,170 10,200" Fill="AliceBlue"/>
+        <Polygon Points="10,170 40,170 20,200" Fill="AliceBlue"/>
 
 
     </Canvas>
