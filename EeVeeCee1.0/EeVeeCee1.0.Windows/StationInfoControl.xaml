@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     d:DesignHeight="200"
     d:DesignWidth="250">
-    <Canvas HorizontalAlignment="Left" Height="170" VerticalAlignment="Top" Width="250" Background="AliceBlue">
+    <Canvas HorizontalAlignment="Left" Height="170" VerticalAlignment="Top" Width="250" Background="#9ACD32" >
         <!-- <TextBlock x:Name="header" Text="Station" Foreground="Black" FontSize="15" Canvas.Top="0" FontFamily="Global User Interface" FontWeight="ExtraBlack"/> -->
         <TextBlock x:Name="networkHead" Text="Network: " Foreground="Black" FontSize="15" Canvas.Top="15" FontFamily="Global User Interface" FontWeight="Bold"/>
         <TextBlock x:Name="distanceHead" Text="Distance: " Foreground="Black" FontSize="15" Canvas.Top="30" FontFamily="Global User Interface" FontWeight="Bold"/>
@@ -29,7 +29,7 @@
         <!-- <TextBlock x:Name="legacyCount" Foreground="Black" FontSize="13" Canvas.Top="90" FontFamily="Global User Interface" Text="#" Canvas.Left="235"/> -->
         <TextBlock x:Name="notes" Foreground="Black" FontSize="13" Canvas.Top="105" FontFamily="Global User Interface" Text="Lorem ipsum sit dolor lorem ipsum sit dolor" Height="65" Width="250" TextWrapping="WrapWholeWords" TextTrimming="WordEllipsis"/>
         <Button x:Name="closeButton" Content="X" Canvas.Left="230" Canvas.Top="-3" Width="23" Height="23" Foreground="Gray" Background="Black" BorderBrush="Gray" FontSize="9" HorizontalAlignment="Right" FontStretch="UltraCondensed" Padding="0" VerticalAlignment="Top"/>
-        <Polygon Points="10,170 40,170 20,200" Fill="AliceBlue"/>
+        <Polygon Points="10,170 40,170 20,200" Fill="#9ACD32"/>
 
 
     </Canvas>

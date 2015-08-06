@@ -27,8 +27,8 @@
                         <ListBoxItem Content="100" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
                         <ListBoxItem Content="200" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
                     </ComboBox>
-                    <TextBlock HorizontalAlignment="Left" Margin="230,20,0,0" TextWrapping="Wrap" Text="Charge Level" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" ToolTipService.ToolTip="See Settings -&gt; Help for field explanation"/>
-                    <ComboBox x:Name="chargeLevelBox" HorizontalAlignment="Left" Margin="336,5,0,0" VerticalAlignment="Top" Width="109" PlaceholderText="Select..." MaxDropDownHeight="Infinity" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" KeyUp="CheckForEnter" Height="44" FontFamily="Global User Interface" SelectedIndex="-1">
+                    <TextBlock HorizontalAlignment="Left" Margin="215,20,0,0" TextWrapping="Wrap" Text="Charge Level" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" ToolTipService.ToolTip="See Settings -&gt; Help for field explanation"/>
+                    <ComboBox x:Name="chargeLevelBox" HorizontalAlignment="Left" Margin="321,5,0,0" VerticalAlignment="Top" Width="124" PlaceholderText="Select..." MaxDropDownHeight="Infinity" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" KeyUp="CheckForEnter" Height="44" FontFamily="Global User Interface" SelectedIndex="-1">
                         <ListBoxItem Content="All" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
                         <ListBoxItem Content="1" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
                         <ListBoxItem Content="2" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
@@ -58,8 +58,8 @@
             <TextBlock x:Name="failLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,0,0" TextWrapping="Wrap" Text="Please fill all fields." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
             <TextBlock x:Name="badInputLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,0,0" TextWrapping="Wrap" Text="Please enter valid location." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
             <TextBlock x:Name="statusLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="15" Foreground="White" Visibility="Visible" FontWeight="Bold"/>
-            <TextBlock x:Name="noInternetLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,2,0,0" TextWrapping="Wrap" Text="Request timed out.  The internet is currently unavailable." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
-            <TextBlock x:Name="workingLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,2,0,0" TextWrapping="Wrap" Text="Working..." VerticalAlignment="Top" FontSize="15" Foreground="White" Visibility="Collapsed" FontWeight="Bold"/>
+            <TextBlock x:Name="noInternetLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,0,0" TextWrapping="Wrap" Text="Request timed out.  The internet is currently unavailable." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
+            <TextBlock x:Name="workingLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,0,0" TextWrapping="Wrap" Text="Working..." VerticalAlignment="Top" FontSize="15" Foreground="White" Visibility="Collapsed" FontWeight="Bold"/>
         </Grid>
     </Grid>
 </Page>
