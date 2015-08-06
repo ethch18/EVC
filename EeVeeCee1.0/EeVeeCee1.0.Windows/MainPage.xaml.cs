@@ -591,11 +591,14 @@ namespace EeVeeCee1._0
 
         /// <summary>
         /// Checks if keyDown yields the enter key when engaged with focus of any of the entry fields.
+        /// Prevents control grid from going semitransparent during input.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CheckForEnter(object sender, KeyRoutedEventArgs e)
        {
+            this.controlGrid.Opacity = 1.0;
+            this.labelGrid.Opacity = 1.0; 
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
                 goButton_Click(sender, e as RoutedEventArgs);
@@ -695,6 +698,29 @@ namespace EeVeeCee1._0
         {
             this.controlGrid.Opacity = 1.0;
             this.labelGrid.Opacity = 1.0;
+        }
+
+        /// <summary>
+        /// Prevents the control grid from going semitransparent if the keyboard has focus on grid items
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GridElement_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+            this.controlGrid.Opacity = 1.0;
+            this.labelGrid.Opacity = 1.0;
+        }
+
+        /// <summary>
+        /// Makes control grid semitransparent after moving pointer over map
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void myMap_GotFocus(object sender, RoutedEventArgs e)
+        {
+            this.controlGrid.Opacity = 0.5;
+            this.labelGrid.Opacity = 0.5;
         }
 
 
