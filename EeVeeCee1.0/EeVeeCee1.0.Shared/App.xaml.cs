@@ -187,10 +187,13 @@ namespace EeVeeCee1._0
             await Windows.System.Launcher.LaunchUriAsync(uri);
         }
         
-        public void ShowPrivacyPolicy()
+        public async void ShowPrivacyPolicy()
         {
-            PrivacyPolicyFlyout Privacy = new PrivacyPolicyFlyout();
-            Privacy.Show();
+            //PrivacyPolicyFlyout Privacy = new PrivacyPolicyFlyout();
+            //Privacy.Show();
+
+            Uri uri = new Uri("http://ethch18.github.io/EVC/privacypolicy.html");
+            await Windows.System.Launcher.LaunchUriAsync(uri);
         }
 
 
