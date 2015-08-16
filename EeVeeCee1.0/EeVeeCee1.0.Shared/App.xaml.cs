@@ -157,6 +157,8 @@ namespace EeVeeCee1._0
         private void OnCommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
         {
             args.Request.ApplicationCommands.Add(new SettingsCommand(
+                "Settings", "Settings", (handler) => ShowSettingsFlyout()));
+            args.Request.ApplicationCommands.Add(new SettingsCommand(
                 "Help", "Help", (handler) => ShowHelpFlyout()));
             args.Request.ApplicationCommands.Add(new SettingsCommand(
                 "About", "About", (handler) => ShowCreditsFlyout()));
@@ -165,6 +167,28 @@ namespace EeVeeCee1._0
             args.Request.ApplicationCommands.Add(new SettingsCommand(
                 "Privacy Policy", "Privacy Policy", (handler) => ShowPrivacyPolicy()));
             
+        }
+        
+        public void ShowSettingsFlyout()
+        {
+            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            bool locationAllowed;
+            Settings set;
+            try
+            {
+                string locSetting = localSettings.Values["locationAllowed"].ToString();
+                if (!bool.TryParse(locSetting, out locationAllowed))
+                {
+                    locationAllowed = false;
+                }
+            }
+            catch (NullReferenceException)
+            {
+                locationAllowed = false;
+            }
+            set = new Settings(locationAllowed);
+            set.Show();
+
         }
 
         public void ShowCreditsFlyout()

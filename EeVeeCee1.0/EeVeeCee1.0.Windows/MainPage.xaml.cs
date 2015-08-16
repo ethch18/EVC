@@ -49,6 +49,7 @@ namespace EeVeeCee1._0
         private LocationCollection stationPoints;
         private bool programZooming;
         private Windows.Devices.Geolocation.Geolocator geolocator;
+        private bool locationAllowed;
 
         /// <summary>
         /// Creates a new instance of MainPage, which refreshes the association dictionary,
@@ -57,13 +58,27 @@ namespace EeVeeCee1._0
         public MainPage()
         {
             //initialize variables
+            this.InitializeComponent();
             
+            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            try
+            {
+                string locSetting = localSettings.Values["locationAllowed"].ToString();
+                if (!bool.TryParse(locSetting, out locationAllowed))
+                {
+                    locationAllowed = false;
+                }
+            }
+            catch (NullReferenceException)
+            {
+                locationAllowed = false;
+            }
             
 
             populated = new List<Fuel_Stations>();
             this.stationsFound = 0;
 
-            this.InitializeComponent();
+            
             this.allNetworksCheck.IsChecked = true;
             this.myMap.SetView(new Location(39.833, -98.533), 5.0);
             this.dontTrip = false;
@@ -76,8 +91,18 @@ namespace EeVeeCee1._0
             //https://msdn.microsoft.com/en-us/library/windows/desktop/windows.devices.geolocation.geolocator.aspx
             //https://msdn.microsoft.com/en-us/library/windows/desktop/br225537.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
 
-            CheckLocationAvailability();
-
+            if (locationAllowed)
+            {
+                this.locationButton.Visibility = Visibility.Visible;
+                this.goButton.Margin = new Thickness(379, 9, 0, 0);
+                this.locationButton.Margin = new Thickness(275, 9, 0, 0);
+                CheckLocationAvailability();
+            }
+            else
+            {
+                this.locationButton.Visibility = Visibility.Collapsed;
+                this.goButton.Margin = new Thickness(345, 9, 0, 0);
+            }
         }
 
 
