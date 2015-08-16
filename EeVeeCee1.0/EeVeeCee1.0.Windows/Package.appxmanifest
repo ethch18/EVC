@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="17864nahTeCh.EVCCharge" Publisher="CN=8D09956C-1074-4183-A470-E8DF749E654E" Version="1.1.0.0" />
+  <Identity Name="17864nahTeCh.EVCCharge" Publisher="CN=8D09956C-1074-4183-A470-E8DF749E654E" Version="1.1.0.1" />
   <Properties>
     <DisplayName>EVC Charge</DisplayName>
     <PublisherDisplayName>nahTeCh</PublisherDisplayName>
@@ -30,5 +30,6 @@
   </Applications>
   <Capabilities>
     <Capability Name="internetClient" />
+    <DeviceCapability Name="location" />
   </Capabilities>
 </Package>

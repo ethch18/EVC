@@ -23,6 +23,7 @@ using System.Windows.Input;
 #if DEBUG
 using System.Diagnostics;
 #endif
+using System.Threading.Tasks;
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 ///pc
 namespace EeVeeCee1._0
@@ -34,6 +35,7 @@ namespace EeVeeCee1._0
     {
         private const int QUERY_RESULT_LIMIT = 200;
 
+        
         //public delegate void OnClickHandler(EventArgs e);
         private const string head = "https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key=";
         //private const string key = "yz9FA6EpH8giJUkWlKzrX5IQ61YRruO9nZ91ZUIo";
@@ -45,7 +47,8 @@ namespace EeVeeCee1._0
         private bool noInternet;
         private bool canContinue;
         private LocationCollection stationPoints;
-        //private Windows.Devices.Geolocation.Geolocator geolocator;
+        private bool programZooming;
+        private Windows.Devices.Geolocation.Geolocator geolocator;
 
         /// <summary>
         /// Creates a new instance of MainPage, which refreshes the association dictionary,
@@ -67,39 +70,80 @@ namespace EeVeeCee1._0
             this.noInternet = false; // TODO: make this more accurate
             this.canContinue = true;
             this.stationPoints = new LocationCollection();
+            this.programZooming = false;
 
-            //this.geolocator = new Windows.Devices.Geolocation.Geolocator();
+            this.geolocator = new Windows.Devices.Geolocation.Geolocator();
             //https://msdn.microsoft.com/en-us/library/windows/desktop/windows.devices.geolocation.geolocator.aspx
             //https://msdn.microsoft.com/en-us/library/windows/desktop/br225537.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
+
+            CheckLocationAvailability();
 
         }
 
 
+        private async Task CheckLocationAvailability()
+        {
+            bool succeeds = true;
+            try
+            {
+                await geolocator.GetGeopositionAsync();
+                Windows.Devices.Geolocation.PositionStatus geostatus = geolocator.LocationStatus;
+                if (geostatus.Equals(Windows.Devices.Geolocation.PositionStatus.Disabled))
+                {
+                    succeeds = false;
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                succeeds = false;
+            }
+            if (!succeeds)
+            {
+                await ShowLocationErrorAsync();
+            }
+        }
 
         /// <summary>
-        /// On button click, creates a query based on the data passed in through the screen fields.
+        /// On button click, begin.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void goButton_Click(object sender, RoutedEventArgs e)
         {
+            string query = ClearAndParse();
+            if (query != null)
+            {
+
+                ////debug query
+                //string query = head + key + "&location=" + location
+                //    + "&status=E&access=public&fuel_type=ELEC";
+                QueryAndPopulate(query);
+            }
+        }
+
+        //private void ShowWorkingLabel()
+        //{
+        //    this.labelGrid.Visibility = Visibility.Visible;
+        //    this.workingLabel.Visibility = Visibility.Visible;
+        //}
+
+        /// <summary>
+        /// Creates a query based on the data passed in through the screen fields.
+        /// </summary>
+        private string ClearAndParse()
+        {
             //clear event fields
             myMap.Children.Clear();
             stationPoints.Clear();
             statusLabel.Text = "";
-            failLabel.Visibility = Visibility.Collapsed;
-            noResultLabel.Visibility = Visibility.Collapsed;
-            timeOutLabel.Visibility = Visibility.Collapsed;
-            badInputLabel.Visibility = Visibility.Collapsed;
-            noInternetLabel.Visibility = Visibility.Collapsed;
-            statusLabel.Visibility = Visibility.Collapsed;
+            AllLabelsInvisible();
             populated.Clear();
             stationsFound = 0;
             this.canContinue = true;
 
             //populate variables, or route to ShowFailMsg() or ShowBadInputMsg() if improper input
             string location = this.locationBox.Text;
-            
+
             //string tempRadius = this.radiusBox.Text;
             string tempRadius;
             try
@@ -109,27 +153,27 @@ namespace EeVeeCee1._0
             catch (NullReferenceException)
             {
                 ShowFailMsg();
-                return;
+                return null;
             }
             decimal radius;
 
             string ev_charging_level;
             try
             {
-                 ev_charging_level = ((string)((ListBoxItem)this.chargeLevelBox.SelectedValue).Content);
+                ev_charging_level = ((string)((ListBoxItem)this.chargeLevelBox.SelectedValue).Content);
             }
             catch (NullReferenceException)
             {
                 ShowFailMsg();
-                return;
-            }            
+                return null;
+            }
             //string ev_charging_level = (string)((ListBoxItem)this.chargeLevelBox.SelectedValue).Content;
             if (ev_charging_level.ToLower().Equals("dc fast"))
             {
                 ev_charging_level = "dc_fast";
             }
             ev_charging_level = ev_charging_level.ToLower();
-            
+
             string ev_network = "";
             if (allNetworksCheck.IsChecked == true)
             {
@@ -177,25 +221,25 @@ namespace EeVeeCee1._0
                 }
             }
 
-            if (String.IsNullOrEmpty(location)) 
+            if (String.IsNullOrEmpty(location))
             {
                 ShowBadInputMsg();
-                return;                
+                return null;
             }
             else if (!decimal.TryParse(tempRadius, out radius))
             {
                 ShowBadInputMsg();
-                return;
+                return null;
             }
             else if (String.IsNullOrEmpty(ev_charging_level))
             {
                 ShowFailMsg();
-                return;             
+                return null;
             }
             else if (ev_network.Equals("FAIL"))
             {
                 ShowFailMsg();
-                return;
+                return null;
             }
 
 
@@ -204,7 +248,7 @@ namespace EeVeeCee1._0
             {
                 this.labelGrid.Visibility = Visibility.Visible;
                 this.workingLabel.Visibility = Windows.UI.Xaml.Visibility.Visible;
-                string query;
+                //string query;
                 if (IsLatLong(location))
                 {
                     string[] latLong = location.Split(',');
@@ -212,25 +256,27 @@ namespace EeVeeCee1._0
                     if (!decimal.TryParse(latLong[0], out latitude))
                     {
                         ShowBadInputMsg();
-                        return;
+                        return null;
                     }
                     if (!decimal.TryParse(latLong[1], out longitude))
                     {
                         ShowBadInputMsg();
-                        return;
+                        return null;
                     }
-                    query = ConstructLatLongQuery(latitude, longitude, radius, ev_network, ev_charging_level);
+                    //query = 
+                    return ConstructLatLongQuery(latitude, longitude, radius, ev_network, ev_charging_level);
                 }
                 else
                 {
-                    query = ConstructQuery(location, radius, ev_network, ev_charging_level);
+                    //query = 
+                    return ConstructQuery(location, radius, ev_network, ev_charging_level);
                 }
-                 
 
-                ////debug query
-                //string query = head + key + "&location=" + location
-                //    + "&status=E&access=public&fuel_type=ELEC";
-                QueryAndPopulate(query);
+
+                //////debug query
+                ////string query = head + key + "&location=" + location
+                ////    + "&status=E&access=public&fuel_type=ELEC";
+                //QueryAndPopulate(query);
             }
         }
 
@@ -277,7 +323,18 @@ namespace EeVeeCee1._0
                 //else { this.myMap.SetView(focusCenter, 8.0); }
 
                 //this.myMap.SetView(focusCenter, 15.0);
-                this.myMap.SetView(new LocationRect(this.stationPoints));
+
+                if (stationsFound == 0)
+                {
+                    this.myMap.SetView(focusCenter, 14.0);
+                }
+                else
+                {
+                    this.myMap.SetView(new LocationRect(this.stationPoints));
+                }
+                programZooming = true;
+
+
 
             }
 
@@ -414,8 +471,10 @@ namespace EeVeeCee1._0
                 {
                     workingLabel.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
                     //time out
-                    this.labelGrid.Visibility = Visibility.Visible;
+                    //this.labelGrid.Visibility = Visibility.Visible;
+                    this.labelGrid.Visibility = Visibility.Collapsed;
                     timeOutLabel.Visibility = Visibility.Visible;
+                    this.bigLabelGrid.Visibility = Visibility.Visible;
                 }
                 noInternet = false;
                 canContinue = false;
@@ -527,7 +586,7 @@ namespace EeVeeCee1._0
                 infoBox.Notes = (String.IsNullOrWhiteSpace(f.intersection_directions)) ? "" : f.intersection_directions;
 
                 Location anchorpoint = new Location(f.latitude, f.longitude);
-                MapLayer.SetPositionAnchor(infoBox, new Point(20, 210));
+                MapLayer.SetPositionAnchor(infoBox, new Point(20, 226));
                 MapLayer.SetPosition(infoBox, anchorpoint);
                 myMap.Children.Add(infoBox);
                 //infoBox.CloseButton.Tapped += CloseButton_Tapped;
@@ -542,7 +601,7 @@ namespace EeVeeCee1._0
                 {
                     myMap.SetView(anchorpoint, 15.0);
                 }
-
+                programZooming = true;
                 
             }
 
@@ -596,9 +655,10 @@ namespace EeVeeCee1._0
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void CheckForEnter(object sender, KeyRoutedEventArgs e)
-       {
+        {
             this.controlGrid.Opacity = 1.0;
-            this.labelGrid.Opacity = 1.0; 
+            this.labelGrid.Opacity = 1.0;
+            this.bigLabelGrid.Opacity = 1.0;
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
                 goButton_Click(sender, e as RoutedEventArgs);
@@ -687,6 +747,7 @@ namespace EeVeeCee1._0
         {
             this.controlGrid.Opacity = 0.5;
             this.labelGrid.Opacity = 0.5;
+            this.bigLabelGrid.Opacity = 0.5;
         }
 
         /// <summary>
@@ -698,6 +759,7 @@ namespace EeVeeCee1._0
         {
             this.controlGrid.Opacity = 1.0;
             this.labelGrid.Opacity = 1.0;
+            this.bigLabelGrid.Opacity = 1.0;
         }
 
         /// <summary>
@@ -710,6 +772,7 @@ namespace EeVeeCee1._0
 
             this.controlGrid.Opacity = 1.0;
             this.labelGrid.Opacity = 1.0;
+            this.bigLabelGrid.Opacity = 1.0;
         }
 
         /// <summary>
@@ -721,8 +784,122 @@ namespace EeVeeCee1._0
         {
             this.controlGrid.Opacity = 0.5;
             this.labelGrid.Opacity = 0.5;
+            this.bigLabelGrid.Opacity = 0.5;
         }
 
+        /// <summary>
+        /// Prevents the map from over-zooming to one location
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void myMap_ViewChanged(object sender, ViewChangedEventArgs e)
+        {
+            if (programZooming && this.myMap.ZoomLevel >= 18.0)
+            {
+                this.myMap.ZoomLevel = 15.0;
+            }
+            programZooming = false;
+        }
+
+        /// <summary>
+        /// Populates the locationBox with the user's current location, and shows an error message if location unavailable.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void locationButton_Tapped(object sender, RoutedEventArgs e)
+        {
+            GetLocation();
+        }
+
+        private async Task GetLocation()
+        {
+            bool succeeds = true;
+            try
+            {
+                Windows.Devices.Geolocation.Geoposition pos = await geolocator.GetGeopositionAsync();
+                Windows.Devices.Geolocation.PositionStatus geostatus = geolocator.LocationStatus;
+                if (geostatus.Equals(Windows.Devices.Geolocation.PositionStatus.Disabled))
+                {
+                    succeeds = false;
+                }
+                else
+                {
+                    string latLong = pos.Coordinate.Point.Position.Latitude.ToString() + ", " + pos.Coordinate.Point.Position.Longitude.ToString();
+                    this.locationBox.Text = latLong;
+                    this.accuracyLabel.Text = "Location Accuracy: " + (pos.Coordinate.Accuracy / 1000.0) + " km";
+                    AllLabelsInvisible();
+                    this.accuracyLabel.Visibility = Visibility.Visible;
+                    this.labelGrid.Visibility = Visibility.Visible;
+
+                }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                succeeds = false;
+            }
+
+            if (!succeeds)
+            {
+                await ShowLocationErrorAsync();
+            }
+        }
+
+        /// <summary>
+        /// Shows location services error dialog
+        /// </summary>
+        /// <returns></returns>
+        private async Task ShowLocationErrorAsync()
+        {
+           await new MessageDialog("Location services are disabled and/or unavailable. Use the Settings charm to enable them.", "Location services are unavailable").ShowAsync();
+        }
+
+        /// <summary>
+        /// Makes all labels invisible
+        /// </summary>
+        private void AllLabelsInvisible()
+        {
+            failLabel.Visibility = Visibility.Collapsed;
+            noResultLabel.Visibility = Visibility.Collapsed;
+            timeOutLabel.Visibility = Visibility.Collapsed;
+            badInputLabel.Visibility = Visibility.Collapsed;
+            noInternetLabel.Visibility = Visibility.Collapsed;
+            statusLabel.Visibility = Visibility.Collapsed;
+            accuracyLabel.Visibility = Visibility.Collapsed;
+            this.labelGrid.Visibility = Visibility.Collapsed;
+            this.bigLabelGrid.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Hides all labels when the text starts changing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void locationBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            AllLabelsInvisible();
+
+            //if (this.accuracyLabel.Visibility.Equals(Visibility.Visible))
+            //{
+            //    this.labelGrid.Visibility = Visibility.Collapsed;
+            //    this.accuracyLabel.Visibility = Visibility.Collapsed;
+            //}
+        }
+
+        /// <summary>
+        /// Routes enter key on location button to tapped event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void locationButton_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            this.controlGrid.Opacity = 1.0;
+            this.labelGrid.Opacity = 1.0;
+            this.bigLabelGrid.Opacity = 1.0;
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                locationButton_Tapped(sender, e as RoutedEventArgs);
+            }
+        }
 
 
         //private void CheckBox_Toggle(object sender, RoutedEventArgs e)

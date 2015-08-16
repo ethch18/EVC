@@ -19,6 +19,8 @@ namespace EeVeeCee1._0
 {
     public sealed partial class StationInfoControl : UserControl
     {
+
+
         public Button CloseButton
         {
             get

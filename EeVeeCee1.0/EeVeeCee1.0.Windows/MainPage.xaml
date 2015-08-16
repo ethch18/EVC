@@ -9,16 +9,18 @@
             mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <bm:Map ZoomLevel="7.5" Credentials="AkIz1619KtztMcHec-vGpU_cTHN69_-wGpWsWrNU9vluXhZAXnisKeVV9RQyQZCS" x:Name="myMap" Margin="0,0,0,0" IsDoubleTapEnabled="False" IsRightTapEnabled="False" HomeRegion="" PointerEntered="myMap_PointerEntered" PointerExited="myMap_PointerExited" ShowNavigationBar="True" ViewRestriction="OneWorldOnly" ShowScaleBar="True" GotFocus="myMap_GotFocus"/>
+        <bm:Map ZoomLevel="7.5" Credentials="AkIz1619KtztMcHec-vGpU_cTHN69_-wGpWsWrNU9vluXhZAXnisKeVV9RQyQZCS" x:Name="myMap" Margin="0,0,0,0" IsDoubleTapEnabled="False" IsRightTapEnabled="False" HomeRegion="" PointerEntered="myMap_PointerEntered" PointerExited="myMap_PointerExited" ShowNavigationBar="True" ViewRestriction="OneWorldOnly" ShowScaleBar="True" GotFocus="myMap_GotFocus" ViewChanged="myMap_ViewChanged" />
+
         <Grid x:Name="controlGrid" Margin="10,10,10,10" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Bottom" Height="155" Width="453" Background="Black" Opacity="0.5">
             <StackPanel >
                 <Grid Name="locationGrid" HorizontalAlignment="Left" Width="450" Canvas.ZIndex="2">
                     <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="15,20,0,0" TextWrapping="Wrap" Text="Location" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" ToolTipService.ToolTip="See Settings -&gt; Help for valid location formatting"/>
-                    <TextBox x:Name="locationBox" Grid.Column="2" HorizontalAlignment="Left" Margin="100,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="346" PlaceholderText="e.g. Los Angeles, CA" KeyUp="CheckForEnter" Height="44" FontFamily="Global User Interface" Padding="10" ToolTipService.ToolTip="" GotFocus="GridElement_GotFocus"/>
+                    <TextBox x:Name="locationBox" Grid.Column="2" HorizontalAlignment="Left" Margin="100,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="346" PlaceholderText="e.g. Los Angeles, CA" KeyUp="CheckForEnter" Height="44" FontFamily="Global User Interface" Padding="10" ToolTipService.ToolTip="" GotFocus="GridElement_GotFocus" TabIndex="1" TextChanged="locationBox_TextChanged"/>
+                    
                 </Grid>
                 <Grid Name="radiusAndChargeLevelGrid" >
                     <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="15,20,0,0" TextWrapping="Wrap" Text="Radius" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" ToolTipService.ToolTip="See Settings -&gt; Help for field explanation"/>
-                    <ComboBox x:Name="radiusBox" HorizontalAlignment="Left" Margin="100,5,0,0" VerticalAlignment="Top" Width="88" KeyUp="CheckForEnter" FontFamily="Global User Interface" PlaceholderText="(miles)" Height="44" SelectedIndex="-1" GotFocus="GridElement_GotFocus">
+                    <ComboBox x:Name="radiusBox" HorizontalAlignment="Left" Margin="100,5,0,0" VerticalAlignment="Top" Width="88" KeyUp="CheckForEnter" FontFamily="Global User Interface" PlaceholderText="(miles)" Height="44" SelectedIndex="-1" GotFocus="GridElement_GotFocus" TabIndex="2">
                         <ListBoxItem Content="1" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
                         <ListBoxItem Content="5" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
                         <ListBoxItem Content="10" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
@@ -28,7 +30,7 @@
                         <ListBoxItem Content="200" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
                     </ComboBox>
                     <TextBlock HorizontalAlignment="Left" Margin="215,20,0,0" TextWrapping="Wrap" Text="Charge Level" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" ToolTipService.ToolTip="See Settings -&gt; Help for field explanation" />
-                    <ComboBox x:Name="chargeLevelBox" HorizontalAlignment="Left" Margin="321,5,0,0" VerticalAlignment="Top" Width="124" PlaceholderText="Select..." MaxDropDownHeight="Infinity" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" KeyUp="CheckForEnter" Height="44" FontFamily="Global User Interface" SelectedIndex="-1" GotFocus="GridElement_GotFocus">
+                    <ComboBox x:Name="chargeLevelBox" HorizontalAlignment="Left" Margin="321,5,0,0" VerticalAlignment="Top" Width="124" PlaceholderText="Select..." MaxDropDownHeight="Infinity" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" KeyUp="CheckForEnter" Height="44" FontFamily="Global User Interface" SelectedIndex="-1" GotFocus="GridElement_GotFocus" TabIndex="3">
                         <ListBoxItem Content="All" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
                         <ListBoxItem Content="1" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
                         <ListBoxItem Content="2" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False"/>
@@ -38,7 +40,7 @@
                 </Grid>
                 <Grid Name="networkGrid">
                     <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="15,20,0,0" TextWrapping="Wrap" Text="Network" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" ToolTipService.ToolTip="See Settings -&gt; Help for field explanation"/>
-                    <ComboBox x:Name="networkBox" Grid.Column="2" HorizontalAlignment="Left" Margin="100,5,0,0" VerticalAlignment="Top" Width="158" PlaceholderText="Select..." MaxDropDownHeight="Infinity" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" KeyUp="CheckForEnter" SelectedIndex="0" Height="44" FontFamily="Global User Interface" GotFocus="GridElement_GotFocus">
+                    <ComboBox x:Name="networkBox" Grid.Column="2" HorizontalAlignment="Left" Margin="100,5,0,0" VerticalAlignment="Top" Width="158" PlaceholderText="Select..." MaxDropDownHeight="Infinity" IsRightTapEnabled="False" IsHoldingEnabled="False" IsDoubleTapEnabled="False" KeyUp="CheckForEnter" SelectedIndex="0" Height="44" FontFamily="Global User Interface" GotFocus="GridElement_GotFocus" TabIndex="4">
                         <CheckBox x:Name="allNetworksCheck" Content="All" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="allNetworksCheck_Unchecked" Checked="allNetworksCheck_Checked"/>
                         <CheckBox x:Name="blinkNetworkCheck" Content="Blink Network" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked" FontFamily="Global User Interface"/>
                         <CheckBox x:Name="chargePointCheck" Content="ChargePoint Network" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked"/>
@@ -48,18 +50,22 @@
                         <!-- <CheckBox x:Name="semaChargeCheck" Content="SemaCharge Network" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked"/> -->
                         <CheckBox x:Name="shorepowerCheck" Content="Shorepower" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsTapEnabled="False" IsRightTapEnabled="False" Foreground="Black"  Unchecked="CheckBox_Unchecked" Checked="CheckBox_Checked"/>
                     </ComboBox>
-                    <Button x:Name="goButton" Content="Go" HorizontalAlignment="Left" Margin="345,9,0,0" VerticalAlignment="Top" Click="goButton_Click" Tapped="goButton_Click" FontFamily="Global User Interface" KeyUp="CheckForEnter" GotFocus="GridElement_GotFocus"/>
+                    <Button x:Name="locationButton" Content="Find Me" HorizontalAlignment="Left" Margin="275,9,0,0" VerticalAlignment="Top" FontFamily="Global User Interface" GotFocus="GridElement_GotFocus" TabIndex="5" Tapped="locationButton_Tapped" Click="locationButton_Tapped"/>
+                    <Button x:Name="goButton" Content="Go" HorizontalAlignment="Left" Margin="379,9,0,0" VerticalAlignment="Top" Click="goButton_Click" Tapped="goButton_Click" FontFamily="Global User Interface" GotFocus="GridElement_GotFocus" TabIndex="6"/>
                 </Grid>
             </StackPanel>
         </Grid>
+        <Grid x:Name="bigLabelGrid" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="Black" Height="40" Width="453" Margin="0,0,0,165" Visibility="Collapsed" Opacity="0.5">
+            <TextBlock x:Name="timeOutLabel" HorizontalAlignment="Left" Margin="15,2,15,0" TextWrapping="Wrap" Text="Request timed out. Please try a more specific query and verify the location." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold" Height="36" Width="428"/>
+        </Grid>
         <Grid x:Name="labelGrid" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Background="Black" Height="20" Width="453" Margin="0,0,0,165" Visibility="Collapsed" Opacity="0.5">
-            <TextBlock x:Name="timeOutLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,0,0" TextWrapping="Wrap" Text="Request timed out. Please try a more specific query and verify the location." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
-            <TextBlock x:Name="noResultLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,0,0" TextWrapping="Wrap" Text="No results found." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
-            <TextBlock x:Name="failLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,0,0" TextWrapping="Wrap" Text="Please fill all fields." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
-            <TextBlock x:Name="badInputLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,0,0" TextWrapping="Wrap" Text="Please enter valid location." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
-            <TextBlock x:Name="statusLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="15" Foreground="White" Visibility="Visible" FontWeight="Bold"/>
-            <TextBlock x:Name="noInternetLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,0,0" TextWrapping="Wrap" Text="Request timed out.  The internet is currently unavailable." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
-            <TextBlock x:Name="workingLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,0,0" TextWrapping="Wrap" Text="Working..." VerticalAlignment="Top" FontSize="15" Foreground="White" Visibility="Collapsed" FontWeight="Bold"/>
+            <TextBlock x:Name="noResultLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,15,0" TextWrapping="Wrap" Text="0 results found." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
+            <TextBlock x:Name="failLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,15,0" TextWrapping="Wrap" Text="Please fill all fields." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
+            <TextBlock x:Name="badInputLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,15,0" TextWrapping="Wrap" Text="Please enter valid location." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
+            <TextBlock x:Name="statusLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,15,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="15" Foreground="White" Visibility="Visible" FontWeight="Bold"/>
+            <TextBlock x:Name="noInternetLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,15,0" TextWrapping="Wrap" Text="Request timed out.  The internet is currently unavailable." VerticalAlignment="Top" FontSize="15" Foreground="Red" Visibility="Collapsed" FontWeight="Bold"/>
+            <TextBlock x:Name="workingLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,15,0" TextWrapping="Wrap" Text="Working..." VerticalAlignment="Top" FontSize="15" Foreground="White" Visibility="Collapsed" FontWeight="Bold"/>
+            <TextBlock x:Name="accuracyLabel" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,2,15,0" TextWrapping="Wrap" Text="Location Accuracy: " VerticalAlignment="Top" FontSize="15" Foreground="White" Visibility="Collapsed" FontWeight="Bold"/>
         </Grid>
     </Grid>
 </Page>
