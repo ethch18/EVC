@@ -1,0 +1,50 @@
+﻿<SettingsFlyout
+    x:Class="EeVeeCee1._0.Settings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EeVeeCee1._0"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    IconSource="Assets/SmallLogo.png"
+    Title="Settings"
+    d:DesignWidth="346">
+
+    <!-- This StackPanel acts as a root panel for vertical layout of the content sections -->
+    <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+
+        <!-- The StackPanel(s) below define individual content sections -->
+
+        <!-- Content Section 1-->
+        <StackPanel Style="{StaticResource SettingsFlyoutSectionStyle}">
+
+            <!-- Section 1 header -->
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Location Services" />
+
+            <!-- Section 1 body -->
+            <ToggleSwitch x:Name="locationToggle" Toggled="locationToggle_Toggled" OnContent="On" OffContent="Off"/>
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,0,25" TextWrapping="Wrap" FontFamily="Global User Interface">
+                <Span FontFamily="Global User Interface">
+                    Turn on In-App Location Services to enable the detection of your location by the app, if available.  
+                    The App will then notify you if your system settings do not allow location services, 
+                    which can be set in the Settings charm.  
+                    Please restart the App once you turn location services on/off.                    
+                </Span>
+                <LineBreak/> <LineBreak/>
+                <Span FontFamily="Global User Interface" FontWeight="Bold">
+                    NOTE: This does not change your system location services setting, only the local setting for this app.
+                </Span>
+                <LineBreak/> <LineBreak/>
+                <Span FontFamily="Global User Interface">
+                    To change your system location services setting, please use the Settings charm.
+                </Span>
+
+                
+            </TextBlock>
+
+        </StackPanel>
+
+        <!-- Define more Content Sections below as necessary -->
+
+    </StackPanel>
+</SettingsFlyout>

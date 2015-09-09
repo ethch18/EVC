@@ -48,8 +48,11 @@ namespace EeVeeCee1._0
         private bool canContinue;
         private LocationCollection stationPoints;
         private bool programZooming;
+
         private Windows.Devices.Geolocation.Geolocator geolocator;
         private bool locationAllowed;
+
+        
 
         /// <summary>
         /// Creates a new instance of MainPage, which refreshes the association dictionary,
@@ -133,7 +136,7 @@ namespace EeVeeCee1._0
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void goButton_Click(object sender, RoutedEventArgs e)
+        private async void goButton_Click(object sender, RoutedEventArgs e)
         {
             string query = ClearAndParse();
             if (query != null)
@@ -142,14 +145,52 @@ namespace EeVeeCee1._0
                 ////debug query
                 //string query = head + key + "&location=" + location
                 //    + "&status=E&access=public&fuel_type=ELEC";
+
+
+
+                //var dispatcher = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher;
+                //await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                //    {
+
+                //        ShowWorkingLabel();
+
+                //    });
+
+                ////Task t = new Task(new Action<object>(QueryAndPopulate), query);
+                ////t.Start();
+                //await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Low, () =>
+                //{
+                //    //Task t = new Task(new Action<object>(QueryAndPopulate), query);
+                //    //t.Start();
+                //    Task.Run(() => QueryAndPopulate(query));
+
+                //});
                 QueryAndPopulate(query);
+                
             }
         }
 
-        //private void ShowWorkingLabel()
+
+        private void ShowWorkingLabel()
+        {
+            //var dispatcher = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher;
+            //await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.High, () =>
+            //    {
+            //        this.labelGrid.Visibility = Visibility.Visible;
+            //        this.workingLabel.Visibility = Visibility.Visible;
+            //    });
+            this.labelGrid.Visibility = Visibility.Visible;
+            this.workingLabel.Visibility = Visibility.Visible;
+        }
+
+        ///// <summary>
+        ///// Wrapper method for QueryAndPopulate with an object
+        ///// </summary>
+        ///// <param name="stringQueryAsObject"></param>
+        //private void QueryAndPopulate(object stringQueryAsObject)
         //{
-        //    this.labelGrid.Visibility = Visibility.Visible;
-        //    this.workingLabel.Visibility = Visibility.Visible;
+        //    string query = (string)stringQueryAsObject;
+        //    QueryAndPopulate(query);
         //}
 
         /// <summary>
@@ -305,6 +346,8 @@ namespace EeVeeCee1._0
             }
         }
 
+
+
         /// <summary>
         /// Generates the query, pings the server, parses the response, and displays all stations on map.
         /// </summary>
@@ -419,6 +462,7 @@ namespace EeVeeCee1._0
 
                 try
                 {
+                    //must run synchronously
                     HttpResponseMessage response = client.GetAsync(query).Result;
                     if (response.IsSuccessStatusCode)
                     {
@@ -463,6 +507,8 @@ namespace EeVeeCee1._0
                     //p.Width = 300;
                     //p.Height = 150;
                     //p.Text = f.station_name;
+
+
                     Location pinLocation = new Location(f.latitude, f.longitude);
                     populated.Add(f);
 
@@ -831,9 +877,9 @@ namespace EeVeeCee1._0
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void locationButton_Tapped(object sender, RoutedEventArgs e)
+        private async void locationButton_Tapped(object sender, RoutedEventArgs e)
         {
-            GetLocation();
+            await GetLocation();
         }
 
         private async Task GetLocation()
@@ -849,12 +895,18 @@ namespace EeVeeCee1._0
                 }
                 else
                 {
-                    string latLong = pos.Coordinate.Point.Position.Latitude.ToString() + ", " + pos.Coordinate.Point.Position.Longitude.ToString();
-                    this.locationBox.Text = latLong;
+                    Location myLocation = new Location(pos.Coordinate.Point.Position.Latitude, pos.Coordinate.Point.Position.Longitude);
+                    string myLocationString = pos.Coordinate.Point.Position.Latitude.ToString() + ", " + pos.Coordinate.Point.Position.Longitude.ToString();
+                    this.locationBox.Text = myLocationString;
                     this.accuracyLabel.Text = "Location Accuracy: " + (pos.Coordinate.Accuracy / 1000.0) + " km";
                     AllLabelsInvisible();
                     this.accuracyLabel.Visibility = Visibility.Visible;
                     this.labelGrid.Visibility = Visibility.Visible;
+                    MyLocationPin mlp = new MyLocationPin();
+                    MapLayer.SetPosition(mlp, myLocation);
+                    MapLayer.SetPositionAnchor(mlp, new Point(10, 10));
+                    myMap.Children.Add(mlp);
+                    myMap.SetView(myLocation, 10.0);
 
                 }
             }
@@ -901,7 +953,7 @@ namespace EeVeeCee1._0
         /// <param name="e"></param>
         private void locationBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            AllLabelsInvisible();
+            //AllLabelsInvisible();
 
             //if (this.accuracyLabel.Visibility.Equals(Visibility.Visible))
             //{
@@ -959,8 +1011,8 @@ namespace EeVeeCee1._0
         //}
 
 
-        
 
-        
+
+
     }
 }
