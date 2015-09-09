@@ -898,7 +898,8 @@ namespace EeVeeCee1._0
                     Location myLocation = new Location(pos.Coordinate.Point.Position.Latitude, pos.Coordinate.Point.Position.Longitude);
                     string myLocationString = pos.Coordinate.Point.Position.Latitude.ToString() + ", " + pos.Coordinate.Point.Position.Longitude.ToString();
                     this.locationBox.Text = myLocationString;
-                    this.accuracyLabel.Text = "Location Accuracy: " + (pos.Coordinate.Accuracy / 1000.0) + " km";
+                    double accuracyNotRounded = pos.Coordinate.Accuracy * 0.62137119 / 1000.0;
+                    this.accuracyLabel.Text = "Location Accuracy: " + (((int) (10 * accuracyNotRounded)) / 10.0) + " miles";
                     AllLabelsInvisible();
                     this.accuracyLabel.Visibility = Visibility.Visible;
                     this.labelGrid.Visibility = Visibility.Visible;
