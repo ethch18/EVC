@@ -32,7 +32,7 @@
                 </Span>
                 <LineBreak/> <LineBreak/>
                 <Span FontFamily="Global User Interface" FontWeight="Bold">
-                    NOTE: This does not change your system location services setting, only the local setting for this app.
+                    NOTE: This does not change your system location services setting, only the local setting for this app.  The app will automatically disable in-app location services if system location services are off.
                 </Span>
                 <LineBreak/> <LineBreak/>
                 <Span FontFamily="Global User Interface">

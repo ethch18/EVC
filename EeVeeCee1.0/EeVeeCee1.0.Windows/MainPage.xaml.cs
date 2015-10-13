@@ -128,6 +128,7 @@ namespace EeVeeCee1._0
             if (!succeeds)
             {
                 await ShowLocationErrorAsync();
+                this.locationButton.IsEnabled = false;
             }
         }
 
@@ -879,7 +880,22 @@ namespace EeVeeCee1._0
         /// <param name="e"></param>
         private async void locationButton_Tapped(object sender, RoutedEventArgs e)
         {
-            await GetLocation();
+            bool succeeds = true;
+            try
+            {
+                await GetLocation();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                succeeds = false;
+            }
+
+            if (!succeeds)
+            {
+                await ShowLocationErrorAsync();
+            }
+
+            //await GetLocation();
         }
 
         private async Task GetLocation()
@@ -899,10 +915,11 @@ namespace EeVeeCee1._0
                     string myLocationString = pos.Coordinate.Point.Position.Latitude.ToString() + ", " + pos.Coordinate.Point.Position.Longitude.ToString();
                     this.locationBox.Text = myLocationString;
                     double accuracyNotRounded = pos.Coordinate.Accuracy * 0.62137119 / 1000.0;
-                    this.accuracyLabel.Text = "Location Accuracy: " + (((int) (10 * accuracyNotRounded)) / 10.0) + " miles";
+                    this.accuracyLabel.Text = "Location Accuracy: " + (((int) (100 * accuracyNotRounded)) / 100.0) + " miles";
                     AllLabelsInvisible();
                     this.accuracyLabel.Visibility = Visibility.Visible;
                     this.labelGrid.Visibility = Visibility.Visible;
+                    myMap.Children.Clear();
                     MyLocationPin mlp = new MyLocationPin();
                     MapLayer.SetPosition(mlp, myLocation);
                     MapLayer.SetPositionAnchor(mlp, new Point(10, 10));
