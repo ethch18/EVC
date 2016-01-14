@@ -19,8 +19,19 @@ namespace EeVeeCee1._0
 {
     public sealed partial class StationInfoControl : UserControl
     {
-
-
+        private bool needsHeightAdjust;
+        private double increase;
+        public double HeightVal
+        {
+            get
+            {
+                return this.container.Height + 30 + ((needsHeightAdjust) ? this.increase : 0);
+            }
+            set
+            {
+                this.container.Height = value - 30 - ((needsHeightAdjust) ? this.increase : 0);
+            }
+        }
         public Button CloseButton
         {
             get
@@ -128,13 +139,45 @@ namespace EeVeeCee1._0
             set
             {
                 this.notes.Text = value;
+                //if (value==String.Empty)
+                //{
+                //    //hide and compress
+                //    this.notesHead.Visibility = Visibility.Collapsed;
+                //    this.container.Height -= 82;
+                //    this.Height -= 82;
+                //    PointCollection adjusted = new PointCollection();
+                //    foreach (Point p in this.pointer.Points)
+                //    {
+                //        adjusted.Add(new Point(p.X, p.Y - 82));
+                //    }
+                //}
+                if (value != string.Empty)
+                {
+                    this.notesHead.Visibility = Visibility.Visible;
+                    this.notes.Visibility = Visibility.Visible;
+                    //this.expander.Visibility = Visibility.Visible;
+                    this.increase = 17;// notesHead.Height;
+                    this.increase += 47;// this.notes.Height;
+                    this.container.Height += this.increase;
+                    this.Height += this.increase;
+                    this.needsHeightAdjust = true;
+                    PointCollection adjusted = new PointCollection();
+                    foreach (Point p in this.pointer.Points)
+                    {
+                        adjusted.Add(new Point(p.X, p.Y + this.increase));
+                    }
+                    this.pointer.Points = adjusted;
+                }
             }
         }
 
         public StationInfoControl()
         {
             this.InitializeComponent();
+            this.needsHeightAdjust = false;
         }
+
+
 
 
 

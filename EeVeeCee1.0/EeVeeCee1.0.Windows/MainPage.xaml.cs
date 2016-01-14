@@ -52,7 +52,7 @@ namespace EeVeeCee1._0
         private Windows.Devices.Geolocation.Geolocator geolocator;
         private bool locationAllowed;
 
-        
+        private MyLocationPin me;
 
         /// <summary>
         /// Creates a new instance of MainPage, which refreshes the association dictionary,
@@ -94,21 +94,26 @@ namespace EeVeeCee1._0
             //https://msdn.microsoft.com/en-us/library/windows/desktop/windows.devices.geolocation.geolocator.aspx
             //https://msdn.microsoft.com/en-us/library/windows/desktop/br225537.aspx?cs-save-lang=1&cs-lang=csharp#code-snippet-2
 
-            if (locationAllowed)
+            this.me = null;
+
+            //if (locationAllowed)
             {
                 this.locationButton.Visibility = Visibility.Visible;
                 this.goButton.Margin = new Thickness(379, 9, 0, 0);
                 this.locationButton.Margin = new Thickness(275, 9, 0, 0);
                 CheckLocationAvailability();
             }
-            else
-            {
-                this.locationButton.Visibility = Visibility.Collapsed;
-                this.goButton.Margin = new Thickness(345, 9, 0, 0);
-            }
+            //else
+            //{
+            //    this.locationButton.Visibility = Visibility.Collapsed;
+            //    this.goButton.Margin = new Thickness(345, 9, 0, 0);
+            //}
         }
 
-
+        /// <summary>
+        /// Checks to see if location services are available
+        /// </summary>
+        /// <returns></returns>
         private async Task CheckLocationAvailability()
         {
             bool succeeds = true;
@@ -128,7 +133,7 @@ namespace EeVeeCee1._0
             if (!succeeds)
             {
                 await ShowLocationErrorAsync();
-                this.locationButton.IsEnabled = false;
+                //this.locationButton.IsEnabled = false;
             }
         }
 
@@ -201,6 +206,10 @@ namespace EeVeeCee1._0
         {
             //clear event fields
             myMap.Children.Clear();
+            if (this.me != null)
+            {
+                myMap.Children.Add(this.me);
+            }
             stationPoints.Clear();
             statusLabel.Text = "";
             AllLabelsInvisible();
@@ -658,7 +667,8 @@ namespace EeVeeCee1._0
                 infoBox.Notes = (String.IsNullOrWhiteSpace(f.intersection_directions)) ? "" : f.intersection_directions;
 
                 Location anchorpoint = new Location(f.latitude, f.longitude);
-                MapLayer.SetPositionAnchor(infoBox, new Point(20, 226));
+                //MapLayer.SetPositionAnchor(infoBox, new Point(20, 226));
+                MapLayer.SetPositionAnchor(infoBox, new Point(20, infoBox.HeightVal + 10));
                 MapLayer.SetPosition(infoBox, anchorpoint);
                 myMap.Children.Add(infoBox);
                 //infoBox.CloseButton.Tapped += CloseButton_Tapped;
@@ -881,6 +891,16 @@ namespace EeVeeCee1._0
         private async void locationButton_Tapped(object sender, RoutedEventArgs e)
         {
             bool succeeds = true;
+            
+            try
+            {
+                await CheckLocationAvailability();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return;
+            }
+
             try
             {
                 await GetLocation();
@@ -919,8 +939,13 @@ namespace EeVeeCee1._0
                     AllLabelsInvisible();
                     this.accuracyLabel.Visibility = Visibility.Visible;
                     this.labelGrid.Visibility = Visibility.Visible;
-                    myMap.Children.Clear();
+                    //myMap.Children.Clear(); //TODO: do I need this here?
+                    if (this.me != null)
+                    {
+                        myMap.Children.Remove(this.me);
+                    }
                     MyLocationPin mlp = new MyLocationPin();
+                    this.me = mlp;
                     MapLayer.SetPosition(mlp, myLocation);
                     MapLayer.SetPositionAnchor(mlp, new Point(10, 10));
                     myMap.Children.Add(mlp);
