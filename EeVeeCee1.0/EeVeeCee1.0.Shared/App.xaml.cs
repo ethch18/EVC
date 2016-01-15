@@ -156,8 +156,8 @@ namespace EeVeeCee1._0
 
         private void OnCommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
         {
-            args.Request.ApplicationCommands.Add(new SettingsCommand(
-                "Settings", "Settings", (handler) => ShowSettingsFlyout()));
+            //args.Request.ApplicationCommands.Add(new SettingsCommand(
+            //    "Settings", "Settings", (handler) => ShowSettingsFlyout()));
             args.Request.ApplicationCommands.Add(new SettingsCommand(
                 "Help", "Help", (handler) => ShowHelpFlyout()));
             args.Request.ApplicationCommands.Add(new SettingsCommand(

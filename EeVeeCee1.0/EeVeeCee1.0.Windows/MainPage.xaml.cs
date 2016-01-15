@@ -970,7 +970,7 @@ namespace EeVeeCee1._0
         /// <returns></returns>
         private async Task ShowLocationErrorAsync()
         {
-           await new MessageDialog("Location services are disabled and/or unavailable. Use the Settings charm to enable them.", "Location services are unavailable").ShowAsync();
+           await new MessageDialog("Location services are disabled and/or unavailable. Please go to PC Settings to enable them.", "Location services are unavailable").ShowAsync();
         }
 
         /// <summary>
